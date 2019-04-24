@@ -7,6 +7,9 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
+首先需要手动输入钠含量，把盐摄入单独列出来。把脂肪酸含量数据加进去。
+
+
 *CMFP index 计算方法*
 在原有28个food group基础上重新计算各个component的得分：
 Grain:fg1,fg2,fg4,fg5, fg6??
