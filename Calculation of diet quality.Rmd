@@ -3,25 +3,32 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 首先需要手动输入钠含量，把盐摄入单独列出来。把脂肪酸含量数据加进去。
 
+```{r}
+library(tidyverse)
+fatty2002 <- read.csv("data/fatty2002.csv",stringsAsFactors = F)
+fatty2002 <- fatty2002 %>% dplyr::select(-FD_name)
+fatty2002[is.na(fatty2002)] <- 0
 
+fatty2004 <- read.csv("data/fatty2004.csv",stringsAsFactors = F)
+fatty2004 <- fatty2004 %>% dplyr::select(-FD_name)
+fatty2004[is.na(fatty2004)] <- 0
+```
 *CMFP index 计算方法*
 在原有28个food group基础上重新计算各个component的得分：
-Grain:fg1,fg2,fg4,fg5, fg6??
-Vegetable:fg10, fg11
-Fruits:fg12, fg13
-Dairy:fg21
-Beans:fg7, fg8, fg20
-Meat and Poutry:fg14-fg17
-Fish and shrimp:fg19
-Eggs:fg18
-Fats and oils:27
-Salt:fg28-需要重新计算
+1. Grain:fg1,fg2,fg4,fg5, fg6??
+2. Vegetable:fg10, fg11
+3. Fruits:fg12, fg13
+4. Dairy:fg21
+5. Beans:fg7, fg8, fg20
+6. Meat and Poutry:fg14-fg17
+7. Fish and shrimp:fg19
+8. Eggs:fg18
+9. Fats and oils:27
+10.Salt:fg28-需要重新计算
 Dietary intakes were adjusted for total energy intake using density method and standardized to 2000 kcal. Intakes between minimum and maximum levels were scored proportionately.
 
 ```{r}
