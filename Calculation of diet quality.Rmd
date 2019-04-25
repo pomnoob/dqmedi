@@ -17,13 +17,14 @@ fatty2004 <- read.csv("data/fatty2004.csv",stringsAsFactors = F)
 fatty2004 <- fatty2004 %>% dplyr::select(-FD_name)
 fatty2004[is.na(fatty2004)] <- 0
 ```
+
 *CMFP index 计算方法*
 在原有28个food group基础上重新计算各个component的得分：
-1. Grain:fg1,fg2,fg4,fg5, fg6??
+1. Grain:谷物，薯类，杂豆
 2. Vegetable:fg10, fg11
 3. Fruits:fg12, fg13
 4. Dairy:fg21
-5. Beans:fg7, fg8, fg20
+5. Beans:大豆及其制品
 6. Meat and Poutry:fg14-fg17
 7. Fish and shrimp:fg19
 8. Eggs:fg18
