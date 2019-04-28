@@ -20,7 +20,7 @@ fatty2004[is.na(fatty2004)] <- 0
 
 *CMFP index 计算方法*
 在原有28个food group基础上重新计算各个component的得分：
-1. Grain:谷物，薯类，杂豆
+1. Grain:谷物
 2. Vegetable:fg10, fg11
 3. Fruits:fg12, fg13
 4. Dairy:fg21
@@ -30,7 +30,39 @@ fatty2004[is.na(fatty2004)] <- 0
 8. Eggs:fg18
 9. Fats and oils:27
 10.Salt:fg28-需要重新计算
+
 Dietary intakes were adjusted for total energy intake using density method and standardized to 2000 kcal. Intakes between minimum and maximum levels were scored proportionately.
+
+*Dash 计算方法*
+1. grain:6 serving, 28 gram
+2. vegetables: 80g
+3. fruit: 80g
+4. dairy: 245g; 
+5. meat, poultry and fish: 28g; 
+6. eggs: 50g; 
+7. nuts: 43g; 
+8. seeds: 28g; 
+9. legumes: 113g; 
+10. fats and oils: 15g
+11. Sweets,added sugars: sweets:15g,5/week
+12. SSSB:5/week,SSSB:245g
+13. sodium：
+
+Serving size: vegetables and fruit: 80g; dairy: 245g; meat, poultry and fish: 28g; eggs: 50g; nuts: 43g; seeds: 28g; legumes: 113g; fats and oils: 15g.  
+
+*AHEI*
+1. Vegetable
+2. Fruits
+3. Nuts and legumes
+4. Red/processed meat
+5. Alcohol
+6. SSB/Juice
+7. EPA and DHA
+8. PUFA
+9. Sodium
+10. Fibre
+
+Serving size: vegetables and fruit: 80g; nuts and dry beans: 28g; legumes: 113g; meat: 113g. Potatoes did not count as vegetables. For alcohol components, nondrinkers received a score of 2.5. Since few women consumed alcohol in the SWHS, women who drank received a score of 5 and standards showing were for men.
 
 ```{r}
 plot(cars)
