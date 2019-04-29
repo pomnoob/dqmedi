@@ -3,234 +3,6 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-###SAS code
-data fg2004.fi2004;
-set chns_mas.nutr1_00;
-if wave=2004;
-run;
-
-proc sql;
-create table fct_type as
-select *
-from chns.fct a
-left join pca.fct b
-on a.FOODCODE=b.foodcode;
-quit;
-
-
-data fg2004.fr2004;
-set chns_mas.nutr3_00;
-if wave=2004;
-run;
-
-proc sql;
-create table fr2004_fct as
-select *
-from fg2004.fr2004 a
-left join fct_type b
-on a.FOODCODE=b.foodcode;
-quit;
-
-proc sql;
-create table fi2004_fct as
-select *
-from fg2004.fi2004 a
-left join fct_type b
-on a.FOODCODE=b.foodcode;
-quit;
-
-data fr2004_home;
-set fr2004_fct;
-if v43=1;
-run;
-
-data fr2004_home;
-set fr2004_home;
-if type=4 or type=5 or type=8 or type=9 or type=12;
-run;
-
-data fg2004.fr2004_home;
-set fr2004_home;
-run;
-
-/**create table of indivdual intakes of veg and meat by day (for usual intakes)**/
-proc sql;
-create table fr2004_por_day as
-select distinct IDInd, VD,hhid, sum(V39) as new_amt
-from fr2004_home
-group by IDInd,VD;
-quit;
-
-proc sql;
-create table fr2004_por_total as
-select distinct IDInd, sum(v39) as total_amt
-from fr2004_home
-group by IDInd;
-quit;
-
-proc sql;
-create table fr2004_pro_day as
-select *
-from fr2004_por_day a
-left join fr2004_por_total b
-on a.IDInd=b.IDInd;
-quit;
-
-data fr2004_pro_day;
-set fr2004_pro_day;
-proportion=new_amt/total_amt;run;
-
-/**create table of indivdual intakes of veg and meat all three days**/
-proc sql;
-create table fr2004_por_ind as
-select distinct IDInd,hhid,sum(V39) as ind_amt
-from fr2004_home
-group by IDInd;
-quit;
-
-/**calculate household total intake**/
-proc sql;
-create table fr2004_por as
-select distinct IDInd,hhid,sum(V39) as total_amt
-from fr2004_home
-group by hhid;
-quit;
-
-proc sql;
-create table fg2004_pro as
-select *
-from fr2004_por a
-left join fr2004_por_ind b
-on a.idind=b.idind;
-quit;
-
-data fg2004_pro;
-set fg2004_pro;
-porportion=ind_amt/total_amt;
-run;
-
-
-/**calculate oil and condiments intakes from food inventory**/
-data fi2004_oc;
-set fi2004_fct;
-if type=19 or type=20;
-run;
-
-proc sql;
-create table fi2004_oc_sum as
-select distinct hhid, foodcode,sum(V22) as total_fg_amt
-from fi2004_oc
-group by hhid,foodcode;
-quit;
-
-proc sql;
-create table oc2004_ind as
-select *
-from fg2004_pro a
-left join fi2004_oc_sum b
-on a.hhid=b.hhid;
-quit;
-
-data fi2004_ocind;
-set oc2004_ind;
-amt=porportion*total_fg_amt;
-drop ind_amt total_fg_amt total_amt porportion;
-run;
-
-data fg2004.fr2004_pro;
-set fg2004_pro;
-run;
-
-data fg2004.fi2004_oc_sum;
-set fi2004_oc_sum;
-run;
-
-data fg2004.fr2004_pro_day;
-set fr2004_pro_day;
-run;
-
-data fg2004.fi2004_ocind;
-set fi2004_ocind;
-run;
-
-data fr2004;
-set fg2004.fr2004;
-run;
-
-/**create ID reference for oil and condiments intakes for each day**/
-proc sql;
-create table fr2004_day as
-select distinct IDInd,VD,hhid
-from fg2004.fr2004
-group by IDInd,VD;
-quit;
-
-proc sql;
-create table fr2004_day_pro as
-select a.*,b.proportion
-from fr2004_day a
-left join fg2004.fr2004_pro_day b
-on a.IDInd=b.IDInd and a.vd=b.vd;
-quit;
-
-data fr2004_day_pro;
-set fr2004_day_pro;
-if proportion= . then proportion=0;/**if proportion is missing, it means that the particular individual ate away from home at that particular day**/
-run;
-
- 
-proc sql;
-create table oc2004_day as
-select *
-from fr2004_day_pro a
-left join fg2004.fi2004_ocind b
-on a.idind=b.idind;
-quit;
-
-data oc2004_day;
-set oc2004_day;
-new_amt=proportion*amt;
-if new_amt= . then new_amt=0;
-drop amt proportion;
-rename new_amt=amt;
-run;
-
-proc sql;
-create table fr2004_d as
-select distinct IDInd,VD,hhid,foodcode,sum(v39)as amt
-from fg2004.fr2004
-group by foodcode,vd,idind;
-quit;
-
-data fg2004_day;
-set fr2004_d oc2004_day;
-run;
-
-
-/**calculate nutrients intakes of each food for each day**/
-proc sql;
-create table fg2004_day_nutr as
-select *
-from fg2004.fg2004_day a
-left join fct_type b
-on a.foodcode=b.foodcode;
-quit;
-
-data fg2004.fg2004_day_nutr;
-set fg2004_day_nutr;
-run;
-/**some of the foodcodes are not available from the two fct books, subsequent analysis excluded those missing foodcode**/
-data fg2004_day_nutr_nomissing;
-set fg2004_day_nutr;
-if foodcode>=1;
-run;
-
-data fg2004.fg2004_day_nutr_nomissing;
-set fg2004_day_nutr_nomissing;
-run;
-######SAS code
-
-
 首先需要手动输入钠含量，把盐摄入单独列出来。把脂肪酸含量数据加进去。
 
 ```{r import dataset}
@@ -255,11 +27,20 @@ fct2004[is.na(fct2004)] <- 0
 
 fct_all <- rbind(fct2002,fct2004)
 fct_all <- dplyr::rename(fct_all,foodcode=Fcode)
-write.csv(fct_all,"data/fct_all.csv",row.names = F)
+write.csv(fct_all,"chns/fct_all.csv",row.names = F)
 ```
 
-```{r}
 
+```{r}
+nutr1 <- read.csv("chns/NUTR1_00.csv",stringsAsFactors = F)
+nutr3 <- read.csv("chns/NUTR3_00.csv",stringsAsFactors = F)
+```
+
+
+
+```{r}
+fg2004 <- read.csv("data/fg2004.csv",stringsAsFactors = F)
+fg2004 <- fg2004 %>% dplyr::mutate(fg_fiber=(amt*edible)/100*(fiber/100),fg_na=(amt*edible)/100*(sodium/100),fg_pufa=(amt*edible)/100*(PUFA/100),fg_n3=(amt*edible)/100*((EPA+DHA)*Total/100))
 ```
 
 *CMFP index 计算方法*

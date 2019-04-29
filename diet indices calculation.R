@@ -45,6 +45,17 @@ fr2004 <- left_join(fr2004,fct,by="FOODCODE")
 fr2004.home <- fr2004 %>% dplyr::filter(V43==1) %>% dplyr::filter(type==4|type==5|type==8|
                                                                   type==9|type==12)
 
-## Intake of veg and meat by interview day
-fr2004.pro.day <- fr2004.home %>% dplyr::group_by(IDind,VD,hhid) %>% summarize(new_amt=sum(V39))
+## Intake of veg and meat by individual
+fr2004.ind <- fr2004.home %>% dplyr::group_by(IDind,VD,hhid) %>% summarize(ind_amt=sum(V39))
+## Intake of veg and meat by family
+fr2004.fam <- fr2004.home %>% dplyr::group_by(hhid, VD) %>% summarize(fam_amt=sum(V39))
+## Proportion
+fr2004.pro <- left_join(fr2004.ind,fr2004.fam,by=c("hhid","VD"))
+fr2004.pro <- dplyr::mutate(fr2004.pro,pro=ind_amt/fam_amt)
+
+## Family food inventory file
+fi2004.oc <- dplyr::filter(fi2004,type==19|type==20) #oil and condiment
+
+fi2004.oc.amt <-fi2004.oc %>% dplyr::group_by(hhid,FOODCODE) %>% summarize(total_oc=sum(V22))
+
 
