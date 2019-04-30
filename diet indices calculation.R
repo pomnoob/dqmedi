@@ -209,7 +209,10 @@ fr2004.dash.md <- left_join(fr2004.dash.md,fr2004.na.md,by="IDind")
 #For SSB
 ssb.2004 <- pe.all %>%
   dplyr::filter(WAVE==2004) %>%
-  dplyr::select(IDind,SSB_d)
+  dplyr::select(IDind,SSB_d) %>%
+  dplyr::mutate(ssb=case_when(SSB_d==1~7,SSB_d==2~4,SSB_d==3~2,SSB_d==4~0.5,SSB_d==5~0.1,SSB_d==9~NA_real_)) %>%
+  dplyr::select(-SSB_d)
+                
 fr2004.dash.md <- left_join(fr2004.dash.md,ssb.2004,by="IDind")
 
 #Serving size
@@ -227,7 +230,21 @@ dash.c <-  dash.c %>%
                 dash8=(dash.c$"8"/(d3kcal/2000))*7/28,
                 dash9=(dash.c$"9"/(d3kcal/2000))*7/113,
                 dash10=(md_fo/(d3kcal/2000))/15,
-                dash11=(dash.c$"11"/(d3kcal/2000))*5/15)
+                dash11=(dash.c$"11"/(d3kcal/2000))*5/15) %>%
+  dplyr::mutate(dash_mpfe=select(.,dash5:dash6) %>% rowSums(na.rm = T),
+                dash_nsl=select(.,dash7:dash9) %>% rowSums(na.rm = T),
+                dash_ss=select(.,dash11,ssb) %>% rowSums(na.rm = T)) %>%
+  dplyr::mutate(score1=case_when(dash1>=6~10,dash1<6~dash1/6*10),
+                score2=case_when(dash2>=4~10,dash2<4~dash2/4*10), 
+                score3=case_when(dash3>=4~10,dash3<4~dash3/4*10),
+                score4=case_when(dash4>=6~10,dash4<6~dash4/6*10),
+                score5=case_when(dash_mpfe<=6~10,dash_mpfe>=9~0,dash_mpfe>6 & dash_mpfe<9~10-(dash_mpfe-6)/3*10),
+                score6=case_when(dash_nsl>=4~10,dash_nsl<4~dash_nsl/4*10),
+                score7=case_when(dash10<=3~10,dash10>=4.5~0,dash10>3 & dash10<4.5~10-(dash10-3)/1.5*10),
+                score8=case_when(dash_ss<=5~10,dash_ss>=7~0,dash_ss>5 & dash_ss<7~10-(dash_ss-5)/2*10),
+                score9=case_when(md_na<=1500~10,md_na>=2300~0,md_na>1500 & md_na<2300~10-(md_na-1500)/800*10)) %>%
+    dplyr::mutate(dash_score=select(.,score1:score9) %>% rowSums(na.rm = T))
+                                
   
 
 

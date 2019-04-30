@@ -70,7 +70,7 @@ Dietary intakes were adjusted for total energy intake using density method and s
 9. legumes: 113g; 
 10. fats and oils: 15g
 11. Sweets,added sugars: sweets:15g,5/week
-12. SSSB:5/week,SSSB:245g
+12. SSSB:<=5/week=10 >=7/week=0
 13. sodium：
 
 Serving size: vegetables and fruit: 80g; dairy: 245g; meat, poultry and fish: 28g; eggs: 50g; nuts: 43g; seeds: 28g; legumes: 113g; fats and oils: 15g.  
