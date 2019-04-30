@@ -20,7 +20,7 @@ fct2004 <- left_join(fct2004,fatty2004,by="Fcode")
 fct2004[is.na(fct2004)] <- 0
 
 fct_all <- rbind(fct2002,fct2004)
-fct_all <- dplyr::rename(fct_all,foodcode=Fcode)
+fct_all <- dplyr::rename(fct_all,FOODCODE=Fcode)
 write.csv(fct_all,"chns/fct_all.csv",row.names = F)
 
 ###########################################################################
@@ -31,10 +31,66 @@ write.csv(fct_all,"chns/fct_all.csv",row.names = F)
 nutr1 <- read.csv("chns/NUTR1_00.csv",stringsAsFactors = F)
 nutr3 <- read.csv("chns/NUTR3_00.csv",stringsAsFactors = F)
 fct <- read.csv("chns/fct_all.csv",stringsAsFactors = F)
+fct_type <- read.csv("chns/fct type.csv",stringsAsFactors = F)
+fct_type <- fct_type %>%
+  dplyr::select(Foodcode,type) %>%
+  dplyr::rename(FOODCODE=Foodcode)
+
+fct <- left_join(fct,fct_type,by="FOODCODE")
 
 ###########################################################################
 ###########################################################################
 ###########################################################################
+########################################################################## 
+## Covariates
+#macronutrients
+macro_md <- read.csv("chns/c12diet.csv",stringsAsFactors = F)
+macro_md.2004 <- macro_md %>% dplyr::filter(wave==2004) %>% dplyr::select(IDind,hhid,commid,d3kcal,d3carbo,d3fat,d3protn)
+
+#gender
+gender.all <- read.csv("chns/mast pub.csv",stringsAsFactors = F)
+gender.all <- gender.all %>% 
+  dplyr::select(Idind,GENDER) %>%
+  dplyr::rename(gender=GENDER,IDind=Idind)
+
+#Education
+educ.all <- read.csv("chns/Educ 12.csv",stringsAsFactors = F)
+educ.all <- educ.all %>%
+  dplyr::select(IDind,hhid,A12) %>%
+  dplyr::rename(educ=A12)
+
+#Individual annual income
+income.all <- read.csv("chns/indinc 12.csv",stringsAsFactors = F)
+income.all <- income.all %>%
+  dplyr::select(IDind,hhid,wave,indinc)
+
+#Urbanization 
+urban.all <- read.csv("chns/urban.csv",stringsAsFactors = F)
+urban.all <- dplyr::select(urban.all,1:8)
+
+#Age
+age.all <- read.csv("chns/surveys pub 12.csv",stringsAsFactors = F)
+age.all <- dplyr::select(age.all,Idind,hhid,wave,age)
+
+#Biomarker
+biom2009 <- read.csv("chns/biomarker.csv",stringsAsFactors = F)
+biom2009 <- biom2009 %>%
+  dplyr::select(IDind,HS_CRP,HDL_C,LDL_C,INS,HbA1c,GLUCOSE,TG,TC) %>%
+  dplyr::mutate(homa_ir=INS*GLUCOSE/22.5,quicki=1/(log(INS)+log(GLUCOSE)))
+
+#Physical exam
+pe.all <- read.csv("chns/pexam 12.csv",stringsAsFactors = F)
+pe.all <- pe.all %>%
+  dplyr::select(IDind,hhid,WAVE,SYSTOL1,SYSTOL2,SYSTOL3,DIASTOL1,DIASTOL2,DIASTOL3,HEIGHT,WEIGHT,U9,U10,
+                U24A,U24J,U24W,U24V,U25,U41,U56,U230) %>%
+  dplyr::rename(hip_c=U9,waist_c=U10,diabetes=U24A,MI=U24J,stroke=U24V,
+                cancer=U24W,smoke=U25,alcohol_d=U41,pregnant=U56,SSB_d=U230) %>%
+  dplyr::mutate(bmi=WEIGHT/(HEIGHT/100)^2,hwr=waist_c/hip_c)
+
+#Physical activity
+pa.all <- read.csv("chns/pa.csv",stringsAsFactors = F)
+
+########################################################################### 
 
 ### Year 2004
 
@@ -46,7 +102,7 @@ fr2004 <- left_join(fr2004,fct,by="FOODCODE")
 
 ## Eat from home
 fr2004.home <- fr2004 %>% dplyr::filter(V43==1) %>% dplyr::filter(type==4|type==5|type==8|
-                                                                  type==9|type==12)
+                                                                    type==9|type==12)
 
 ## Intake of veg and meat by individual
 fr2004.ind <- fr2004.home %>% dplyr::group_by(IDind,VD,hhid) %>% summarize(ind_amt=sum(V39))
@@ -73,7 +129,7 @@ fr2004.pro.fs <- left_join(fr2004.pro.fats,fr2004.pro.salt2,by=c("IDind","VD"))
 fr2004.fs.md <- fr2004.pro.fs %>% dplyr::group_by(IDind) %>% summarize(md_fo=mean(fats),md_salt=mean(salt),na.rm=T)
 
 ###########################################################################
- 
+
 fr2004 <- fr2004 %>% dplyr::mutate(fg_fiber=(V39*edible)/100*(fiber/100),
                                    fg_na=(V39*edible)/100*(sodium/100),
                                    fg_pufa=(V39*edible)/100*(PUFA/100),
@@ -104,7 +160,33 @@ fr2004.cmfp.md <- fr2004.cmfp %>%
   summarize(md_amt=mean(vd_amt),na.rm=T)%>%
   spread(key=cmfp,value=md_amt,fill=0)
 
-#DASH
+cmfp.c <- left_join(macro_md.2004,fr2004.cmfp.md,by="IDind")
+cmfp.c <- left_join(cmfp.c,fr2004.fs.md,by="IDind")
+cmfp.c <- cmfp.c %>%
+  dplyr::mutate(cmfp1=cmfp.c$"1"/(d3kcal/2000),
+                cmfp2=cmfp.c$"2"/(d3kcal/2000),
+                cmfp3=cmfp.c$"3"/(d3kcal/2000),
+                cmfp4=cmfp.c$"4"/(d3kcal/2000),
+                cmfp5=cmfp.c$"5"/(d3kcal/2000),
+                cmfp6=cmfp.c$"6"/(d3kcal/2000),
+                cmfp7=cmfp.c$"7"/(d3kcal/2000),
+                cmfp8=cmfp.c$"8"/(d3kcal/2000),
+                cmfp9=md_fo/(d3kcal/2000),
+                cmfp10=md_salt/(d3kcal/2000)) %>%
+  dplyr::mutate(score1=case_when(cmfp1>300~5,cmfp1<300~cmfp1*5/300),
+                score2=case_when(cmfp2>400~5,cmfp2<400~cmfp2*5/400),
+                score3=case_when(cmfp3>100~5,cmfp3<100~cmfp3*5/100),
+                score4=case_when(cmfp4>300~5,cmfp4<300~cmfp4*5/300),
+                score5=case_when(cmfp5>30~5,cmfp5<30~cmfp5*5/30),
+                score6=case_when(cmfp6<=100~4,cmfp6>=150~0,cmfp6>100 & cmfp6<150~4-(cmfp6-100)*4/50),
+                score7=case_when(cmfp7>50~3,cmfp7<50~cmfp7*3/50),
+                score8=case_when(cmfp8<=50~3,cmfp8>=75~0,cmfp8>50 & cmfp8<75~3-(cmfp8-50)*3/25),
+                score9=case_when(md_fo<=30~5,md_fo>=45~0,md_fo>30 & md_fo<45~5-(md_fo-30)*5/15),
+                score10=case_when(md_salt<=6~5,md_salt>=9~0,md_salt>6 & md_salt<9~5-(md_salt-6)*5/3)) %>%
+  dplyr::mutate(cmfp_score=select(.,score1:score10) %>%
+                  rowSums(na.rm = T))
+
+##DASH
 fr2004.dash<- fr2004 %>% 
   dplyr::filter(dash!=0) %>% 
   dplyr::group_by(IDind,VD,dash) %>% 
@@ -115,12 +197,42 @@ fr2004.dash.md <- fr2004.dash %>%
   summarize(md_amt=mean(vd_amt),na.rm=T)%>%
   spread(key=dash,value=md_amt,fill=0)
 
-fr2004.s.md <- fr2004.fs.md %>%
-  dplyr::select(IDind,md_salt)
+# For fats and oils
+fr2004.f.md <- fr2004.fs.md %>%
+  dplyr::select(IDind,md_fo)
+fr2004.dash.md <- left_join(fr2004.dash.md,fr2004.f.md,by="IDind")
 
-fr2004.dash.md <- left_join(fr2004.dash.md,fr2004.s.md,by="IDind")
+#For sodium
+fr2004.na.md <- dplyr::select(fr2004.nu.md,IDind,md_na)
+fr2004.dash.md <- left_join(fr2004.dash.md,fr2004.na.md,by="IDind")
 
-#AHEI
+#For SSB
+ssb.2004 <- pe.all %>%
+  dplyr::filter(WAVE==2004) %>%
+  dplyr::select(IDind,SSB_d)
+fr2004.dash.md <- left_join(fr2004.dash.md,ssb.2004,by="IDind")
+
+#Serving size
+dash.c <- left_join(macro_md.2004,fr2004.dash.md, by="IDind")
+
+
+dash.c <-  dash.c %>%
+  dplyr::mutate(dash1=(dash.c$"1"/(d3kcal/2000))/28,
+                dash2=(dash.c$"2"/(d3kcal/2000))/80,
+                dash3=(dash.c$"3"/(d3kcal/2000))/80,
+                dash4=(dash.c$"4"/(d3kcal/2000))/245,
+                dash5=(dash.c$"5"/(d3kcal/2000))*7/28,
+                dash6=(dash.c$"6"/(d3kcal/2000))*7/50,
+                dash7=(dash.c$"7"/(d3kcal/2000))*7/43,
+                dash8=(dash.c$"8"/(d3kcal/2000))*7/28,
+                dash9=(dash.c$"9"/(d3kcal/2000))*7/113,
+                dash10=(md_fo/(d3kcal/2000))/15,
+                dash11=(dash.c$"11"/(d3kcal/2000))*5/15)
+  
+
+
+
+##AHEI
 fr2004.ahei<- fr2004 %>% 
   dplyr::filter(ahei!=0) %>% 
   dplyr::group_by(IDind,VD,ahei) %>% 
@@ -132,7 +244,4 @@ fr2004.ahei.md <- fr2004.ahei %>%
   spread(key=ahei,value=md_amt,fill=0)
 
 fr2004.ahei.md <- left_join(fr2004.ahei.md,fr2004.nu.md,by="IDind")
-  
-
-
 
