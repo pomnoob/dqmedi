@@ -28,14 +28,16 @@ write.csv(fct_all,"chns/fct_all.csv",row.names = F)
 ###########################################################################
 
 ## import chns data
+library(tidyverse)
 nutr1 <- read.csv("chns/NUTR1_00.csv",stringsAsFactors = F)
 nutr3 <- read.csv("chns/NUTR3_00.csv",stringsAsFactors = F)
 fct <- read.csv("chns/fct_all.csv",stringsAsFactors = F)
+
+##No Need to run this on XPS13
 fct_type <- read.csv("chns/fct type.csv",stringsAsFactors = F)
 fct_type <- fct_type %>%
   dplyr::select(Foodcode,type) %>%
   dplyr::rename(FOODCODE=Foodcode)
-
 fct <- left_join(fct,fct_type,by="FOODCODE")
 
 ###########################################################################
@@ -246,9 +248,6 @@ dash.c <-  dash.c %>%
     dplyr::mutate(dash_score=select(.,score1:score9) %>% rowSums(na.rm = T))
                                 
   
-
-
-
 ##AHEI
 fr2004.ahei<- fr2004 %>% 
   dplyr::filter(ahei!=0) %>% 
@@ -262,3 +261,10 @@ fr2004.ahei.md <- fr2004.ahei %>%
 
 fr2004.ahei.md <- left_join(fr2004.ahei.md,fr2004.nu.md,by="IDind")
 
+#For SSB and alcohol from questionaire
+sh.2004 <- pe.all %>%
+  dplyr::filter(WAVE==2004) %>%
+  dplyr::select(IDind,SSB_d,alcohol_d) %>%
+  dplyr::mutate(ssb=case_when(SSB_d==1~7,SSB_d==2~4,SSB_d==3~2,SSB_d==4~0.5,SSB_d==5~0.1,SSB_d==9~NA_real_),
+                alcohol=) %>%
+  dplyr::select(-SSB_d)
