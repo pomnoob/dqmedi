@@ -264,7 +264,35 @@ fr2004.ahei.md <- left_join(fr2004.ahei.md,fr2004.nu.md,by="IDind")
 #For SSB and alcohol from questionaire
 sh.2004 <- pe.all %>%
   dplyr::filter(WAVE==2004) %>%
-  dplyr::select(IDind,SSB_d,alcohol_d) %>%
-  dplyr::mutate(ssb=case_when(SSB_d==1~7,SSB_d==2~4,SSB_d==3~2,SSB_d==4~0.5,SSB_d==5~0.1,SSB_d==9~NA_real_),
-                alcohol=) %>%
-  dplyr::select(-SSB_d)
+  dplyr::select(IDind,SSB_d,alcohol_d)
+fr2004.ahei.md <- left_join(fr2004.ahei.md,sh.2004,by="IDind")
+
+#Gender and macro
+fr2004.ahei.md <- left_join(fr2004.ahei.md,gender.all,by="IDind")
+ahei.c <- left_join(fr2004.ahei.md,macro_md.2004,by="IDind")
+
+#Score for alcohol
+ahei.c <- ahei.c %>%
+  dplyr::mutate(d51=`51`/(d3kcal/2000)/(236*4),d52=`52`/(d3kcal/2000)/(236*12),
+                d53=`53`/(d3kcal/2000)/(236*1.5)) %>%
+  dplyr::mutate(s_alcohol=d51+d52+d53) %>%
+  dplyr::mutate(score_alcohol=case_when(gender==1 & s_alcohol>=3.5~0,gender==2 & s_alcohol>=2.5~0,s_alcohol<0.5~2.5,
+                                        gender==1 & s_alcohol>=0.5 & s_alcohol<=2.0~10, gender==2 & s_alcohol>=0.5 & s_alcohol<=1.5~10,
+                                        gender==1 & s_alcohol>2.0 & s_alcohol<3.5~10-(s_alcohol-2.0)*(10/1.5),
+                                        gender==2 & s_alcohol>1.5 & s_alcohol<2.5~10-(s_alcohol-1.5)*(10/1)))
+
+#Score for SSB
+ahei.c <- ahei.c %>%
+  dplyr::mutate(score_ssb=case_when(SSB_d==1~0,SSB_d==2~4,SSB_d==3~6,SSB_d==4~8,SSB_d==5|SSB_d==9 | is.na(SSB_d)~10))
+
+#Score for pufa
+ahei.c <- ahei.c %>%
+  dplyr::mutate(pufa_p=md_pufa*9/d3kcal*100) %>%
+  dplyr::mutate(score_pufa=case_when(pufa_p>=10~10,pufa_p<=2~0,pufa_p<10 & pufa_p>2~(pufa_p-2)*(10/8)))
+
+#Score for sodium
+ahei.c$md_na[is.na(ahei.c$md_na)] <- round(mean(ahei.c$md_na,na.rm = T))
+ahei.c$score_na <- ntile(desc(ahei.c$md_na),10)
+
+#others
+ahei.c
