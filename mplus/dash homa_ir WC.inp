@@ -1,0 +1,30 @@
+data: file is id2009.csv;
+
+variable: names are IDind WAVE hhid age commid d3kcal d3carbo d3fat d3protn 
+                    bmi hwr waist_c diastol systol gender educ indinc
+                    index met cmfp_s dash_s ahei_s HS_CRP HDL_C LDL_C 
+                    INS HbA1c GLUCOSE TG TC homa_ir quicki cmfp dash ahei;
+          usev are  age gender met index waist_c homa_ir dash cal income;
+          missing are all(999);        
+define:
+cal=d3kcal/10000;
+income=indinc/10000;  
+        
+analysis:
+    estimator = ML;
+    BOOTSTRAP = 10000;
+
+model:
+age gender met index waist_c homa_ir dash cal income;
+
+homa_ir on dash waist_c age gender cal met index income;
+
+waist_c on dash age gender cal met index income;
+
+
+Model indirect:
+homa_ir ind waist_c dash;
+
+
+OUTPUT:
+SAMPSTAT CINTERVAL(BOOTSTRAP);

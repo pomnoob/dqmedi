@@ -1,0 +1,472 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/05/2019  10:53 AM
+
+INPUT INSTRUCTIONS
+
+  data: file is id2009.csv;
+
+  variable: names are IDind WAVE hhid age commid d3kcal d3carbo d3fat d3protn
+                      bmi hwr waist_c diastol systol gender educ indinc
+                      index met cmfp_s dash_s ahei_s HS_CRP HDL_C LDL_C
+                      INS HbA1c GLUCOSE TG TC homa_ir quicki cmfp dash ahei;
+            usev are  age gender met index bmi HbA1c ahei cal income;
+            missing are all(999);
+  define:
+  cal=d3kcal/10000;
+  income=indinc/10000;
+
+  analysis:
+      estimator = ML;
+      BOOTSTRAP = 10000;
+
+  model:
+  age gender met index bmi HbA1c ahei cal income;
+
+  HbA1c on ahei bmi age gender cal met index income;
+
+  bmi on ahei age gender cal met index income;
+
+
+  Model indirect:
+  HbA1c ind bmi ahei;
+
+
+  OUTPUT:
+  SAMPSTAT CINTERVAL(BOOTSTRAP);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        9537
+
+Number of dependent variables                                    2
+Number of independent variables                                  7
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   BMI         HBA1C
+
+Observed independent variables
+   AGE         GENDER      MET         INDEX       AHEI        CAL
+   INCOME
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Number of bootstrap draws
+    Requested                                                10000
+    Completed                                                10000
+
+Input data file(s)
+  id2009.csv
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns            22
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              BMI           HBA1C         AGE           GENDER        MET
+              ________      ________      ________      ________      ________
+ BMI            0.940
+ HBA1C          0.834         0.850
+ AGE            0.940         0.850         1.000
+ GENDER         0.940         0.850         1.000         1.000
+ MET            0.940         0.850         0.996         0.996         0.996
+ INDEX          0.940         0.849         0.999         0.999         0.995
+ AHEI           0.896         0.810         0.953         0.953         0.949
+ CAL            0.940         0.850         1.000         1.000         0.996
+ INCOME         0.697         0.629         0.735         0.735         0.735
+
+
+           Covariance Coverage
+              INDEX         AHEI          CAL           INCOME
+              ________      ________      ________      ________
+ INDEX          0.999
+ AHEI           0.952         0.953
+ CAL            0.999         0.953         1.000
+ INCOME         0.735         0.700         0.735         0.735
+
+
+SAMPLE STATISTICS
+
+
+     ESTIMATED SAMPLE STATISTICS
+
+
+           Means
+              BMI           HBA1C         AGE           GENDER        MET
+              ________      ________      ________      ________      ________
+      1        23.252         5.566        49.443         1.517       117.113
+
+
+           Means
+              INDEX         AHEI          CAL           INCOME
+              ________      ________      ________      ________
+      1        67.247         4.858         0.213         1.571
+
+
+           Covariances
+              BMI           HBA1C         AGE           GENDER        MET
+              ________      ________      ________      ________      ________
+ BMI           11.828
+ HBA1C          0.575         0.649
+ AGE            3.044         2.570       238.779
+ GENDER        -0.001        -0.002         0.184         0.250
+ MET           -3.412        -4.378      -402.715        -2.230     11563.792
+ INDEX          4.561         0.233        12.592         0.116      -566.625
+ AHEI           0.179         0.025         1.281         0.011        10.056
+ CAL            0.014         0.000        -0.122        -0.009         1.155
+ INCOME         0.467         0.032        -1.892        -0.134        -0.971
+
+
+           Covariances
+              INDEX         AHEI          CAL           INCOME
+              ________      ________      ________      ________
+ INDEX        377.483
+ AHEI          -2.426         1.000
+ CAL           -0.115         0.006         0.005
+ INCOME         8.416        -0.059         0.008         5.795
+
+
+           Correlations
+              BMI           HBA1C         AGE           GENDER        MET
+              ________      ________      ________      ________      ________
+ BMI            1.000
+ HBA1C          0.208         1.000
+ AGE            0.057         0.206         1.000
+ GENDER         0.000        -0.006         0.024         1.000
+ MET           -0.009        -0.051        -0.242        -0.042         1.000
+ INDEX          0.068         0.015         0.042         0.012        -0.271
+ AHEI           0.052         0.032         0.083         0.021         0.094
+ CAL            0.060        -0.005        -0.118        -0.282         0.160
+ INCOME         0.056         0.016        -0.051        -0.111        -0.004
+
+
+           Correlations
+              INDEX         AHEI          CAL           INCOME
+              ________      ________      ________      ________
+ INDEX          1.000
+ AHEI          -0.125         1.000
+ CAL           -0.088         0.094         1.000
+ INCOME         0.180        -0.025         0.052         1.000
+
+
+     MAXIMUM LOG-LIKELIHOOD VALUE FOR THE UNRESTRICTED (H1) MODEL IS -194612.478
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     BMI                  23.255       0.509      13.700    0.01%      20.310     22.086     22.958
+            8969.000      11.823       0.410      42.719    0.01%      23.875     26.058
+     HBA1C                 5.575       6.264       2.700    0.01%       5.100      5.400      5.500
+            8107.000       0.648     121.488      30.000    0.01%       5.600      5.900
+     AGE                  49.443       0.106      18.000    0.56%      36.000     45.000     49.000
+            9537.000     238.779      -0.531      98.000    0.01%      54.000     63.000
+     GENDER                1.517      -0.069       1.000   48.26%       1.000      1.000      2.000
+            9537.000       0.250      -1.995       2.000   51.74%       2.000      2.000
+     MET                 117.017       1.191       0.000   10.16%      25.333     60.058     84.375
+            9497.000   11560.449       1.377    1023.900    0.01%     115.900    204.267
+     INDEX                67.242       0.063      30.417    0.50%      48.056     58.397     64.956
+            9530.000     377.456      -1.285     106.502    0.40%      73.962     87.800
+     AHEI                  4.860       0.383       1.074    0.01%       4.018      4.517      4.755
+            9088.000       1.000       0.027       8.397    0.01%       5.035      5.695
+     CAL                   0.213       1.206       0.040    0.01%       0.159      0.192      0.207
+            9537.000       0.005       7.477       1.024    0.01%       0.223      0.263
+     INCOME                1.580       9.570     -12.160    0.01%       0.457      0.915      1.136
+            7013.000       5.790     147.065      60.000    0.01%       1.360      2.206
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       54
+
+Loglikelihood
+
+          H0 Value                     -194612.478
+          H1 Value                     -194612.478
+
+Information Criteria
+
+          Akaike (AIC)                  389332.956
+          Bayesian (BIC)                389719.754
+          Sample-Size Adjusted BIC      389548.151
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            809.855
+          Degrees of Freedom                    15
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ HBA1C    ON
+    AHEI               0.004      0.008      0.461      0.645
+    BMI                0.046      0.003     15.102      0.000
+    AGE                0.010      0.001     18.901      0.000
+    GENDER            -0.012      0.018     -0.694      0.488
+    CAL                0.037      0.138      0.272      0.786
+    MET                0.000      0.000     -0.487      0.626
+    INDEX              0.000      0.000     -0.942      0.346
+    INCOME             0.005      0.005      1.093      0.274
+
+ BMI      ON
+    AHEI               0.168      0.038      4.414      0.000
+    AGE                0.014      0.003      5.428      0.000
+    GENDER             0.150      0.075      1.994      0.046
+    CAL                3.622      0.606      5.981      0.000
+    MET                0.000      0.000      0.998      0.319
+    INDEX              0.013      0.002      6.444      0.000
+    INCOME             0.067      0.020      3.279      0.001
+
+ GENDER   WITH
+    AGE                0.184      0.079      2.315      0.021
+
+ MET      WITH
+    AGE             -402.714     15.702    -25.647      0.000
+    GENDER            -2.230      0.552     -4.040      0.000
+
+ INDEX    WITH
+    AGE               12.592      3.091      4.074      0.000
+    GENDER             0.116      0.100      1.163      0.245
+    MET             -566.623     20.963    -27.030      0.000
+
+ AHEI     WITH
+    AGE                1.281      0.161      7.981      0.000
+    GENDER             0.011      0.005      2.031      0.042
+    MET               10.056      1.177      8.541      0.000
+    INDEX             -2.426      0.208    -11.651      0.000
+
+ CAL      WITH
+    AGE               -0.122      0.011    -11.428      0.000
+    GENDER            -0.009      0.000    -28.490      0.000
+    MET                1.155      0.074     15.584      0.000
+    INDEX             -0.115      0.013     -8.601      0.000
+    AHEI               0.006      0.001      9.438      0.000
+
+ INCOME   WITH
+    AGE               -1.892      0.372     -5.086      0.000
+    GENDER            -0.134      0.014     -9.552      0.000
+    MET               -0.970      2.548     -0.381      0.703
+    INDEX              8.416      0.553     15.226      0.000
+    AHEI              -0.059      0.032     -1.863      0.062
+    CAL                0.008      0.002      3.893      0.000
+
+ Means
+    AGE               49.443      0.158    312.209      0.000
+    GENDER             1.517      0.005    295.668      0.000
+    MET              117.113      1.109    105.565      0.000
+    INDEX             67.247      0.197    340.784      0.000
+    AHEI               4.858      0.011    462.544      0.000
+    CAL                0.213      0.001    306.923      0.000
+    INCOME             1.571      0.029     54.400      0.000
+
+ Intercepts
+    BMI               19.739      0.327     60.387      0.000
+    HBA1C              4.014      0.093     43.147      0.000
+
+ Variances
+    AGE              238.779      2.928     81.564      0.000
+    GENDER             0.250      0.000   1385.308      0.000
+    MET            11563.789    218.151     53.008      0.000
+    INDEX            377.482      3.236    116.633      0.000
+    AHEI               1.000      0.015     67.064      0.000
+    CAL                0.005      0.000     31.431      0.000
+    INCOME             5.795      0.841      6.891      0.000
+
+ Residual Variances
+    BMI               11.617      0.191     60.910      0.000
+    HBA1C              0.597      0.082      7.269      0.000
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from AHEI to HBA1C
+
+  Indirect             0.008      0.002      4.273      0.000
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ HBA1C    ON
+    AHEI            -0.017      -0.012      -0.009       0.004       0.017       0.020       0.025
+    BMI              0.038       0.040       0.041       0.046       0.051       0.052       0.053
+    AGE              0.009       0.009       0.009       0.010       0.011       0.011       0.012
+    GENDER          -0.057      -0.048      -0.042      -0.012       0.017       0.023       0.034
+    CAL             -0.315      -0.237      -0.191       0.037       0.262       0.309       0.388
+    MET              0.000       0.000       0.000       0.000       0.000       0.000       0.000
+    INDEX           -0.002      -0.001      -0.001       0.000       0.000       0.000       0.001
+    INCOME          -0.004      -0.002      -0.001       0.005       0.014       0.017       0.021
+
+ BMI      ON
+    AHEI             0.071       0.093       0.105       0.168       0.231       0.243       0.264
+    AGE              0.007       0.009       0.010       0.014       0.018       0.019       0.021
+    GENDER          -0.047      -0.002       0.025       0.150       0.273       0.300       0.349
+    CAL              2.068       2.438       2.631       3.622       4.626       4.808       5.168
+    MET             -0.001       0.000       0.000       0.000       0.001       0.001       0.001
+    INDEX            0.008       0.009       0.010       0.013       0.016       0.017       0.018
+    INCOME           0.016       0.029       0.035       0.067       0.102       0.109       0.123
+
+ GENDER   WITH
+    AGE             -0.018       0.029       0.053       0.184       0.312       0.339       0.388
+
+ MET      WITH
+    AGE           -443.129    -433.599    -428.334    -402.714    -376.672    -371.529    -361.505
+    GENDER          -3.626      -3.308      -3.124      -2.230      -1.331      -1.150      -0.807
+
+ INDEX    WITH
+    AGE              4.706       6.576       7.493      12.592      17.712      18.612      20.545
+    GENDER          -0.136      -0.078      -0.047       0.116       0.281       0.313       0.378
+    MET           -621.623    -606.863    -600.933    -566.623    -532.022    -525.220    -514.578
+
+ AHEI     WITH
+    AGE              0.863       0.963       1.018       1.281       1.544       1.594       1.691
+    GENDER          -0.003       0.000       0.002       0.011       0.019       0.021       0.024
+    MET              7.062       7.801       8.165      10.056      11.994      12.358      13.143
+    INDEX           -2.969      -2.832      -2.770      -2.426      -2.085      -2.019      -1.879
+
+ CAL      WITH
+    AGE             -0.149      -0.143      -0.140      -0.122      -0.105      -0.101      -0.095
+    GENDER          -0.010      -0.010      -0.010      -0.009      -0.009      -0.009      -0.009
+    MET              0.964       1.012       1.034       1.155       1.280       1.302       1.350
+    INDEX           -0.150      -0.141      -0.137      -0.115      -0.093      -0.089      -0.081
+    AHEI             0.005       0.005       0.005       0.006       0.007       0.008       0.008
+
+ INCOME   WITH
+    AGE             -2.893      -2.623      -2.517      -1.892      -1.289      -1.182      -0.970
+    GENDER          -0.171      -0.162      -0.158      -0.134      -0.111      -0.107      -0.099
+    MET             -7.475      -5.873      -5.119      -0.970       3.262       4.105       5.732
+    INDEX            7.041       7.361       7.521       8.416       9.354       9.530       9.903
+    AHEI            -0.138      -0.121      -0.111      -0.059      -0.007       0.004       0.025
+    CAL              0.003       0.004       0.005       0.008       0.012       0.013       0.014
+
+ Means
+    AGE             49.030      49.134      49.182      49.443      49.702      49.749      49.848
+    GENDER           1.504       1.507       1.509       1.517       1.526       1.527       1.530
+    MET            114.231     114.954     115.306     117.113     118.960     119.294     119.859
+    INDEX           66.741      66.863      66.921      67.247      67.572      67.631      67.760
+    AHEI             4.831       4.838       4.841       4.858       4.875       4.879       4.885
+    CAL              0.211       0.212       0.212       0.213       0.214       0.215       0.215
+    INCOME           1.502       1.518       1.526       1.571       1.620       1.631       1.650
+
+ Intercepts
+    BMI             18.897      19.096      19.201      19.739      20.277      20.387      20.577
+    HBA1C            3.770       3.827       3.861       4.014       4.167       4.197       4.256
+
+ Variances
+    AGE            231.262     233.084     233.972     238.779     243.647     244.587     246.405
+    GENDER           0.249       0.249       0.249       0.250       0.250       0.250       0.250
+    MET          11007.811   11139.889   11205.753   11563.789   11926.167   11995.433   12136.773
+    INDEX          369.255     371.145     372.137     377.482     382.791     383.732     385.725
+    AHEI             0.961       0.971       0.975       1.000       1.024       1.029       1.038
+    CAL              0.004       0.004       0.004       0.005       0.005       0.005       0.005
+    INCOME           3.945       4.332       4.518       5.795       7.272       7.582       8.249
+
+ Residual Variances
+    BMI             11.146      11.239      11.297      11.617      11.925      11.980      12.101
+    HBA1C            0.458       0.476       0.487       0.597       0.749       0.787       0.863
+
+
+CONFIDENCE INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from AHEI to HBA1C
+
+  Indirect           0.003       0.004       0.005       0.008       0.011       0.011       0.012
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    d:\data\dpmedi\mplus\ahei hba1c bmi.dgm
+
+     Beginning Time:  10:53:42
+        Ending Time:  10:54:49
+       Elapsed Time:  00:01:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

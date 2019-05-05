@@ -1,0 +1,85 @@
+VERSION 1.1.0
+INPUT
+DATA:
+ file is id2009.csv;
+VARIABLE:
+ names are IDind WAVE hhid age commid d3kcal d3carbo d3fat d3protn
+                    bmi hwr waist_c diastol systol gender educ indinc
+                    index met cmfp_s dash_s ahei_s HS_CRP HDL_C LDL_C
+                    INS HbA1c GLUCOSE TG TC homa_ir quicki cmfp dash ahei;
+          usev are  age gender met index waist_c homa_ir cmfp cal income;
+          missing are all(999);
+DEFINE:
+cal=d3kcal/10000;
+income=indinc/10000;
+ANALYSIS:
+    estimator = ML;
+    BOOTSTRAP = 10000;
+OUTPUT:
+SAMPSTAT CINTERVAL(BOOTSTRAP);
+MODEL:
+age gender met index waist_c homa_ir cmfp cal income;
+homa_ir on cmfp waist_c age gender cal met index income;
+waist_c on cmfp age gender cal met index income;
+INPUT_END
+3
+0
+0
+0
+ML
+1
+GENERAL
+0
+9
+0
+0
+waist_c homa_ir age gender met index cmfp cal income
+3
+1 2 0 0 0 0 0 0 0
+0
+0
+1 1 cmfp homa_ir     0.088     0.061    -0.032     0.207
+1 1 waist_c homa_ir     0.086     0.007     0.071     0.100
+1 1 age homa_ir     0.003     0.005    -0.006     0.013
+1 1 gender homa_ir     0.013     0.165    -0.311     0.337
+1 1 cal homa_ir    -1.034     1.207    -3.399     1.332
+1 1 met homa_ir    -0.002     0.001    -0.003    -0.001
+1 1 index homa_ir     0.001     0.005    -0.008     0.010
+1 1 income homa_ir    -0.005     0.020    -0.045     0.035
+1 1 cmfp waist_c    -0.102     0.107    -0.312     0.108
+1 1 age waist_c     0.130     0.007     0.116     0.144
+1 1 gender waist_c    -2.768     0.224    -3.206    -2.330
+1 1 cal waist_c    10.834     1.763     7.378    14.291
+1 1 met waist_c    -0.001     0.001    -0.003     0.001
+1 1 index waist_c     0.029     0.006     0.017     0.041
+1 1 income waist_c     0.202     0.059     0.087     0.317
+2 1 gender age     0.184     0.079     0.028     0.339
+2 1 met age  -402.567    15.700  -433.339  -371.795
+2 1 met gender    -2.225     0.552    -3.308    -1.143
+2 1 index age    12.572     3.091     6.513    18.630
+2 1 index gender     0.116     0.100    -0.079     0.311
+2 1 index met  -566.834    20.964  -607.924  -525.744
+2 1 cmfp age    -0.487     0.165    -0.810    -0.163
+2 1 cmfp gender     0.019     0.005     0.009     0.029
+2 1 cmfp met    -2.162     1.051    -4.222    -0.101
+2 1 cmfp index     5.131     0.195     4.749     5.514
+2 1 cal age    -0.122     0.011    -0.143    -0.101
+2 1 cal gender    -0.009     0.000    -0.010    -0.009
+2 1 cal met     1.155     0.074     1.010     1.300
+2 1 cal index    -0.115     0.013    -0.141    -0.089
+2 1 cal cmfp    -0.002     0.001    -0.003     0.000
+2 1 income age    -1.918     0.370    -2.644    -1.192
+2 1 income gender    -0.134     0.014    -0.161    -0.107
+2 1 income met    -0.772     2.577    -5.823     4.280
+2 1 income index     8.361     0.558     7.268     9.454
+2 1 income cmfp     0.187     0.033     0.122     0.252
+2 1 income cal     0.008     0.002     0.004     0.013
+4 1 waist_c    98.161     1.424    95.371   100.951
+4 1 homa_ir    38.789     7.517    24.054    53.523
+5 1 age   238.779     2.927   233.041   244.517
+5 1 gender     0.250     0.000     0.249     0.250
+5 1 met 11563.145   218.129 11135.611 11990.678
+5 1 index   377.603     3.239   371.256   383.951
+5 1 cmfp     1.000     0.014     0.972     1.028
+5 1 cal     0.005     0.000     0.004     0.005
+5 1 income     5.792     0.841     4.144     7.440
