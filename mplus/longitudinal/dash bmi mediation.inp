@@ -59,17 +59,25 @@ sb on id(bi)
       age04 gender kcal04 met04;
 
 
-MODEL CONSTRAINT:
-NEW (ind1 ind2 ind3 di1 di2 di3 to1 to2 to3);
-ind1=as1*bs+ai1*bi;
-ind2=as2*bs+ai2*bi;
-ind3=as3*bs+ai3*bi;
-to1=as1*bs+ai1*bi+c1;
-to2=as2*bs+ai2*bi+c2;
-to3=as3*bs+ai3*bi+c3;
-di1=c1;
-di2=c2;
-di3=c3;
+ MODEL CONSTRAINT:
+  NEW (ind1 ind2 ind3 di1 di2 di3 to1 to2 to3
+   ind_l_1 ind_l_2 ind_l_3
+  ind_s_1 ind_s_2 ind_s_3);
+  ind1=as1*bs+ai1*bi;
+  ind2=as2*bs+ai2*bi;
+  ind3=as3*bs+ai3*bi;
+  to1=as1*bs+ai1*bi+c1;
+  to2=as2*bs+ai2*bi+c2;
+  to3=as3*bs+ai3*bi+c3;
+  di1=c1;
+  di2=c2;
+  di3=c3;
+  ind_l_1=ai1*bi;
+  ind_l_2=ai2*bi;
+  ind_l_3=ai3*bi;
+  ind_s_1=as1*bs;
+  ind_s_2=as2*bs;
+  ind_s_3=as3*bs;
 
 
 OUTPUT: tech1 tech8 cinterval(BOOTSTRAP);

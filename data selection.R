@@ -250,6 +250,24 @@ id0411 <- dplyr::mutate(id0411,q1=case_when(q_index==2~1,q_index!=2~0),
                         q3=case_when(q_index==4~1,q_index!=4~0))
 
 id0411.mplus <- id0411
+id0411.sas <- id0411
 id0411.mplus[is.na(id0411.mplus)] <- 999
+id0411.sas[is.na(id0411.sas)] <-""
 
 write.csv(id0411.mplus,"data/id0411.csv",row.names = F)
+write.csv(id0411.sas,"data/id0411 NA.csv",row.names = F)
+
+mean(id0411$cmfp04)
+mean(id0411$cmfp06,na.rm = T)
+mean(id0411$cmfp09,na.rm = T)
+mean(id0411$cmfp11,na.rm = T)
+
+mean(id0411$dash04,na.rm = T)
+mean(id0411$dash06,na.rm = T)
+mean(id0411$dash09,na.rm = T)
+mean(id0411$dash11,na.rm = T)
+
+cmfp.summary <- dplyr::select(id0411,cmfp04,dash04,ahei04)
+sd(cmfp.summary$cmfp04)
+sd(cmfp.summary$dash04)
+sd(cmfp.summary$ahei04,na.rm=T)

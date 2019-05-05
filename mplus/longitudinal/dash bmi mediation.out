@@ -1,6 +1,6 @@
 Mplus VERSION 7.4
 MUTHEN & MUTHEN
-05/05/2019   3:05 PM
+05/05/2019   4:46 PM
 
 INPUT INSTRUCTIONS
 
@@ -65,17 +65,25 @@ INPUT INSTRUCTIONS
         age04 gender kcal04 met04;
 
 
-  MODEL CONSTRAINT:
-  NEW (ind1 ind2 ind3 di1 di2 di3 to1 to2 to3);
-  ind1=as1*bs+ai1*bi;
-  ind2=as2*bs+ai2*bi;
-  ind3=as3*bs+ai3*bi;
-  to1=as1*bs+ai1*bi+c1;
-  to2=as2*bs+ai2*bi+c2;
-  to3=as3*bs+ai3*bi+c3;
-  di1=c1;
-  di2=c2;
-  di3=c3;
+   MODEL CONSTRAINT:
+    NEW (ind1 ind2 ind3 di1 di2 di3 to1 to2 to3
+     ind_l_1 ind_l_2 ind_l_3
+    ind_s_1 ind_s_2 ind_s_3);
+    ind1=as1*bs+ai1*bi;
+    ind2=as2*bs+ai2*bi;
+    ind3=as3*bs+ai3*bi;
+    to1=as1*bs+ai1*bi+c1;
+    to2=as2*bs+ai2*bi+c2;
+    to3=as3*bs+ai3*bi+c3;
+    di1=c1;
+    di2=c2;
+    di3=c3;
+    ind_l_1=ai1*bi;
+    ind_l_2=ai2*bi;
+    ind_l_3=ai3*bi;
+    ind_s_1=as1*bs;
+    ind_s_2=as2*bs;
+    ind_s_3=as3*bs;
 
 
   OUTPUT: tech1 tech8 cinterval(BOOTSTRAP);
@@ -407,6 +415,12 @@ New/Additional Parameters
     TO1                0.010      0.013      0.790      0.429
     TO2               -0.021      0.014     -1.472      0.141
     TO3               -0.053      0.015     -3.457      0.001
+    IND_L_1           -0.003      0.002     -1.705      0.088
+    IND_L_2           -0.003      0.002     -1.595      0.111
+    IND_L_3           -0.011      0.005     -2.035      0.042
+    IND_S_1           -0.001      0.002     -0.414      0.679
+    IND_S_2           -0.003      0.003     -0.931      0.352
+    IND_S_3           -0.008      0.007     -1.121      0.262
 
 
 CONFIDENCE INTERVALS OF MODEL RESULTS
@@ -581,6 +595,12 @@ New/Additional Parameters
     TO1             -0.021      -0.012      -0.009       0.010       0.032       0.037       0.044
     TO2             -0.055      -0.048      -0.044      -0.021       0.004       0.009       0.018
     TO3             -0.091      -0.082      -0.078      -0.053      -0.027      -0.022      -0.012
+    IND_L_1         -0.009      -0.007      -0.006      -0.003       0.000       0.000       0.000
+    IND_L_2         -0.009      -0.007      -0.006      -0.003       0.000       0.000       0.000
+    IND_L_3         -0.026      -0.022      -0.020      -0.011      -0.002      -0.001       0.001
+    IND_S_1         -0.010      -0.006      -0.005      -0.001       0.002       0.003       0.004
+    IND_S_2         -0.015      -0.011      -0.009      -0.003       0.001       0.002       0.004
+    IND_S_3         -0.029      -0.025      -0.022      -0.008       0.002       0.004       0.009
 
 
 TECHNICAL 1 OUTPUT
@@ -821,9 +841,15 @@ TECHNICAL 1 OUTPUT
 
 
            NEW/ADDITIONAL PARAMETERS
-              DI3           TO1           TO2           TO3
-              ________      ________      ________      ________
- 1                 88            89            90            91
+              DI3           TO1           TO2           TO3           IND_L_1
+              ________      ________      ________      ________      ________
+ 1                 88            89            90            91            92
+
+
+           NEW/ADDITIONAL PARAMETERS
+              IND_L_2       IND_L_3       IND_S_1       IND_S_2       IND_S_3
+              ________      ________      ________      ________      ________
+ 1                 93            94            95            96            97
 
 
      STARTING VALUES
@@ -1061,9 +1087,15 @@ TECHNICAL 1 OUTPUT
 
 
            NEW/ADDITIONAL PARAMETERS
-              DI3           TO1           TO2           TO3
-              ________      ________      ________      ________
- 1              0.500         0.500         0.500         0.500
+              DI3           TO1           TO2           TO3           IND_L_1
+              ________      ________      ________      ________      ________
+ 1              0.500         0.500         0.500         0.500         0.500
+
+
+           NEW/ADDITIONAL PARAMETERS
+              IND_L_2       IND_L_3       IND_S_1       IND_S_2       IND_S_3
+              ________      ________      ________      ________      ________
+ 1              0.500         0.500         0.500         0.500         0.500
 
 
 TECHNICAL 8 OUTPUT
@@ -1083,9 +1115,9 @@ DIAGRAM INFORMATION
   Diagram output
     d:\data\dpmedi\mplus\longitudinal\dash bmi mediation.dgm
 
-     Beginning Time:  15:05:09
-        Ending Time:  15:13:35
-       Elapsed Time:  00:08:26
+     Beginning Time:  16:46:29
+        Ending Time:  16:55:27
+       Elapsed Time:  00:08:58
 
 
 
