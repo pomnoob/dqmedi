@@ -1,6 +1,6 @@
 Mplus VERSION 7.4
 MUTHEN & MUTHEN
-05/07/2019   9:55 AM
+05/07/2019   9:53 AM
 
 INPUT INSTRUCTIONS
 
@@ -14,7 +14,7 @@ INPUT INSTRUCTIONS
                       WEIGHT hip_c waist_c bmi hwr diastol
                       systol age gender educ indinc index
                       met cmfp_s dash_s ahei_s cmfp dash ahei;
-            usev are  age gender bmi HbA1c dash cal;
+            usev are  age gender bmi HbA1c cmfp cal;
             missing are all(999);
   define:
   cal=d3kcal/10000;
@@ -24,15 +24,15 @@ INPUT INSTRUCTIONS
       BOOTSTRAP = 1000;
 
   model:
-  age gender bmi HbA1c dash cal;
+  age gender bmi HbA1c cmfp cal;
 
-  HbA1c on dash bmi age gender cal;
+  HbA1c on cmfp bmi age gender cal;
 
-  bmi on dash age gender cal;
+  bmi on cmfp age gender cal;
 
 
   Model indirect:
-  HbA1c ind dash;
+  HbA1c ind cmfp;
 
 
   OUTPUT:
@@ -60,7 +60,7 @@ Observed dependent variables
    BMI         HBA1C
 
 Observed independent variables
-   AGE         GENDER      DASH        CAL
+   AGE         GENDER      CMFP        CAL
 
 
 Estimator                                                       ML
@@ -94,13 +94,13 @@ Minimum covariance coverage value   0.100
 
 
            Covariance Coverage
-              BMI           HBA1C         AGE           GENDER        DASH
+              BMI           HBA1C         AGE           GENDER        CMFP
               ________      ________      ________      ________      ________
  BMI            0.978
  HBA1C          0.978         1.000
  AGE            0.978         1.000         1.000
  GENDER         0.978         1.000         1.000         1.000
- DASH           0.965         0.984         0.984         0.984         0.984
+ CMFP           0.965         0.984         0.984         0.984         0.984
  CAL            0.965         0.984         0.984         0.984         0.984
 
 
@@ -121,14 +121,14 @@ Number of Free Parameters                       27
 
 Loglikelihood
 
-          H0 Value                      -71132.024
-          H1 Value                      -71132.024
+          H0 Value                      -71203.878
+          H1 Value                      -71203.878
 
 Information Criteria
 
-          Akaike (AIC)                  142318.049
-          Bayesian (BIC)                142507.406
-          Sample-Size Adjusted BIC      142421.605
+          Akaike (AIC)                  142461.755
+          Bayesian (BIC)                142651.112
+          Sample-Size Adjusted BIC      142565.312
             (n* = (n + 2) / 24)
 
 Chi-Square Test of Model Fit
@@ -150,7 +150,7 @@ CFI/TLI
 
 Chi-Square Test of Model Fit for the Baseline Model
 
-          Value                            731.989
+          Value                            726.135
           Degrees of Freedom                     9
           P-Value                           0.0000
 
@@ -166,49 +166,49 @@ MODEL RESULTS
                     Estimate       S.E.  Est./S.E.    P-Value
 
  HBA1C    ON
-    DASH              -0.021      0.009     -2.295      0.022
-    BMI                0.046      0.003     15.247      0.000
-    AGE                0.010      0.001     19.768      0.000
-    GENDER            -0.014      0.018     -0.736      0.462
-    CAL                0.017      0.132      0.131      0.896
+    CMFP              -0.012      0.008     -1.520      0.129
+    BMI                0.046      0.003     15.196      0.000
+    AGE                0.010      0.001     19.749      0.000
+    GENDER            -0.015      0.018     -0.810      0.418
+    CAL                0.051      0.132      0.383      0.702
 
  BMI      ON
-    DASH               0.058      0.038      1.502      0.133
-    AGE                0.014      0.003      5.260      0.000
-    GENDER             0.184      0.080      2.300      0.021
-    CAL                3.250      0.634      5.122      0.000
+    CMFP               0.010      0.039      0.269      0.788
+    AGE                0.014      0.003      5.291      0.000
+    GENDER             0.189      0.080      2.363      0.018
+    CAL                3.152      0.628      5.022      0.000
 
  GENDER   WITH
     AGE                0.074      0.086      0.864      0.387
 
- DASH     WITH
-    AGE                0.434      0.176      2.472      0.013
-    GENDER             0.041      0.006      7.389      0.000
+ CMFP     WITH
+    AGE               -0.419      0.177     -2.369      0.018
+    GENDER             0.018      0.005      3.316      0.001
 
  CAL      WITH
     AGE               -0.119      0.011    -10.487      0.000
     GENDER            -0.009      0.000    -26.391      0.000
-    DASH              -0.009      0.001    -11.605      0.000
+    CMFP              -0.001      0.001     -1.704      0.088
 
  Means
-    AGE               49.986      0.161    310.976      0.000
+    AGE               49.986      0.161    310.975      0.000
     GENDER             1.532      0.006    263.820      0.000
-    DASH               5.961      0.011    560.148      0.000
+    CMFP               3.898      0.011    355.779      0.000
     CAL                0.214      0.001    294.489      0.000
 
  Intercepts
-    BMI               21.267      0.356     59.805      0.000
-    HBA1C              4.127      0.099     41.878      0.000
+    BMI               21.578      0.302     71.569      0.000
+    HBA1C              4.049      0.086     47.233      0.000
 
  Variances
     AGE              224.948      3.044     73.909      0.000
-    GENDER             0.249      0.000    666.435      0.000
-    DASH               1.000      0.015     65.242      0.000
+    GENDER             0.249      0.000    666.442      0.000
+    CMFP               1.000      0.015     66.148      0.000
     CAL                0.004      0.000     40.317      0.000
 
  Residual Variances
-    BMI               11.785      0.206     57.340      0.000
-    HBA1C              0.597      0.081      7.374      0.000
+    BMI               11.789      0.205     57.397      0.000
+    HBA1C              0.597      0.081      7.366      0.000
 
 
 TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
@@ -217,20 +217,20 @@ TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
                                                     Two-Tailed
                     Estimate       S.E.  Est./S.E.    P-Value
 
-Effects from DASH to HBA1C
+Effects from CMFP to HBA1C
 
-  Total               -0.018      0.009     -1.953      0.051
-  Total indirect       0.003      0.002      1.488      0.137
+  Total               -0.011      0.008     -1.411      0.158
+  Total indirect       0.000      0.002      0.269      0.788
 
   Specific indirect
 
     HBA1C
     BMI
-    DASH               0.003      0.002      1.488      0.137
+    CMFP               0.000      0.002      0.269      0.788
 
   Direct
     HBA1C
-    DASH              -0.021      0.009     -2.295      0.022
+    CMFP              -0.012      0.008     -1.520      0.129
 
 
 
@@ -239,49 +239,49 @@ CONFIDENCE INTERVALS OF MODEL RESULTS
                   Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
 
  HBA1C    ON
-    DASH            -0.045      -0.039      -0.035      -0.021      -0.006      -0.003       0.003
-    BMI              0.038       0.040       0.041       0.046       0.051       0.052       0.053
+    CMFP            -0.034      -0.027      -0.025      -0.012       0.001       0.003       0.010
+    BMI              0.038       0.040       0.041       0.046       0.051       0.051       0.053
     AGE              0.009       0.009       0.010       0.010       0.011       0.011       0.012
-    GENDER          -0.059      -0.047      -0.043      -0.014       0.018       0.023       0.032
-    CAL             -0.319      -0.249      -0.205       0.017       0.225       0.262       0.340
+    GENDER          -0.060      -0.048      -0.044      -0.015       0.017       0.022       0.031
+    CAL             -0.301      -0.214      -0.166       0.051       0.259       0.300       0.364
 
  BMI      ON
-    DASH            -0.041      -0.017      -0.006       0.058       0.120       0.133       0.152
+    CMFP            -0.087      -0.067      -0.051       0.010       0.078       0.089       0.109
     AGE              0.007       0.009       0.010       0.014       0.019       0.020       0.021
-    GENDER          -0.018       0.026       0.052       0.184       0.314       0.336       0.395
-    CAL              1.410       1.942       2.154       3.250       4.254       4.375       4.720
+    GENDER          -0.012       0.033       0.055       0.189       0.318       0.341       0.401
+    CAL              1.276       1.853       2.085       3.152       4.124       4.263       4.582
 
  GENDER   WITH
     AGE             -0.145      -0.089      -0.064       0.074       0.212       0.256       0.298
 
- DASH     WITH
-    AGE             -0.037       0.088       0.144       0.434       0.720       0.770       0.863
-    GENDER           0.026       0.030       0.032       0.041       0.051       0.052       0.055
+ CMFP     WITH
+    AGE             -0.869      -0.766      -0.716      -0.419      -0.118      -0.068       0.018
+    GENDER           0.003       0.008       0.009       0.018       0.028       0.029       0.031
 
  CAL      WITH
     AGE             -0.148      -0.141      -0.138      -0.119      -0.101      -0.098      -0.092
     GENDER          -0.010      -0.010      -0.010      -0.009      -0.009      -0.009      -0.009
-    DASH            -0.011      -0.010      -0.010      -0.009      -0.007      -0.007      -0.007
+    CMFP            -0.003      -0.003      -0.002      -0.001       0.000       0.000       0.001
 
  Means
     AGE             49.550      49.662      49.712      49.986      50.243      50.296      50.384
     GENDER           1.517       1.520       1.522       1.532       1.542       1.543       1.547
-    DASH             5.931       5.939       5.943       5.961       5.978       5.981       5.987
+    CMFP             3.870       3.878       3.881       3.898       3.917       3.921       3.928
     CAL              0.212       0.212       0.213       0.214       0.215       0.215       0.216
 
  Intercepts
-    BMI             20.406      20.590      20.670      21.267      21.845      21.988      22.226
-    HBA1C            3.882       3.938       3.965       4.127       4.295       4.319       4.402
+    BMI             20.805      20.999      21.091      21.578      22.084      22.181      22.382
+    HBA1C            3.826       3.887       3.907       4.049       4.193       4.223       4.270
 
  Variances
     AGE            216.813     218.934     219.609     224.948     229.934     230.750     232.518
     GENDER           0.248       0.248       0.248       0.249       0.250       0.250       0.250
-    DASH             0.960       0.970       0.975       1.000       1.025       1.030       1.041
+    CMFP             0.962       0.969       0.975       1.000       1.025       1.031       1.037
     CAL              0.004       0.004       0.004       0.004       0.005       0.005       0.005
 
  Residual Variances
-    BMI             11.228      11.378      11.444      11.785      12.126      12.191      12.307
-    HBA1C            0.459       0.474       0.487       0.597       0.747       0.774       0.858
+    BMI             11.228      11.381      11.446      11.789      12.128      12.197      12.306
+    HBA1C            0.459       0.475       0.487       0.597       0.748       0.774       0.859
 
 
 CONFIDENCE INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
@@ -289,20 +289,20 @@ CONFIDENCE INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFF
 
                   Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
 
-Effects from DASH to HBA1C
+Effects from CMFP to HBA1C
 
-  Total             -0.044      -0.037      -0.033      -0.018      -0.003      -0.001       0.005
-  Total indirect    -0.002      -0.001       0.000       0.003       0.006       0.006       0.007
+  Total             -0.035      -0.028      -0.025      -0.011       0.002       0.004       0.010
+  Total indirect    -0.004      -0.003      -0.002       0.000       0.004       0.004       0.005
 
   Specific indirect
 
     HBA1C
     BMI
-    DASH            -0.002      -0.001       0.000       0.003       0.006       0.006       0.007
+    CMFP            -0.004      -0.003      -0.002       0.000       0.004       0.004       0.005
 
   Direct
     HBA1C
-    DASH            -0.045      -0.039      -0.035      -0.021      -0.006      -0.003       0.003
+    CMFP            -0.034      -0.027      -0.025      -0.012       0.001       0.003       0.010
 
 
 
@@ -312,10 +312,10 @@ DIAGRAM INFORMATION
   If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
 
   Diagram output
-    c:\users\likai\documents\git_repo\dqmedi\mplus\dash hba1c bmi.dgm
+    c:\users\likai\documents\git_repo\dqmedi\mplus\cmfp hba1c bmi.dgm
 
-     Beginning Time:  09:55:26
-        Ending Time:  09:55:29
+     Beginning Time:  09:53:47
+        Ending Time:  09:53:50
        Elapsed Time:  00:00:03
 
 

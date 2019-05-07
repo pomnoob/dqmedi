@@ -1,0 +1,378 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/07/2019  10:18 AM
+
+INPUT INSTRUCTIONS
+
+  data: file is me2009.csv;
+
+  variable: names are ID HS_CRP HDL LDL INS HbA1c
+                      GLUCOSE TG TC homa quicki hhidx
+                      commid d3kcal d3carbo d3fat d3protn
+                      hhidy WAVE SYSTOL1 SYSTOL2 SYSTOL3
+                      DIASTOL1 DIASTOL2 DIASTOL3 HEIGHT
+                      WEIGHT hip_c waist_c bmi hwr diastol
+                      systol age gender educ indinc index
+                      met cmfp_s dash_s ahei_s cmfp dash ahei;
+            usev are  age gender bmi homa dash met index cal;
+            missing are all(999);
+  define:
+  cal=d3kcal/10000;
+
+  analysis:
+      estimator = ML;
+      BOOTSTRAP = 1000;
+
+  model:
+  age gender bmi homa dash met index cal;
+
+  homa on dash bmi age gender cal met index;
+
+  bmi on dash age gender cal met index;
+
+
+  Model indirect:
+  homa ind dash;
+
+
+  OUTPUT:
+  CINTERVAL(BOOTSTRAP);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        8211
+
+Number of dependent variables                                    2
+Number of independent variables                                  6
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   BMI         HOMA
+
+Observed independent variables
+   AGE         GENDER      DASH        MET         INDEX       CAL
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Number of bootstrap draws
+    Requested                                                 1000
+    Completed                                                 1000
+
+Input data file(s)
+  me2009.csv
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             7
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              BMI           HOMA          AGE           GENDER        DASH
+              ________      ________      ________      ________      ________
+ BMI            0.978
+ HOMA           0.978         1.000
+ AGE            0.978         1.000         1.000
+ GENDER         0.978         1.000         1.000         1.000
+ DASH           0.965         0.984         0.984         0.984         0.984
+ MET            0.978         0.997         0.997         0.997         0.984
+ INDEX          0.965         0.983         0.983         0.983         0.983
+ CAL            0.965         0.984         0.984         0.984         0.984
+
+
+           Covariance Coverage
+              MET           INDEX         CAL
+              ________      ________      ________
+ MET            0.997
+ INDEX          0.983         0.983
+ CAL            0.984         0.983         0.984
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       44
+
+Loglikelihood
+
+          H0 Value                     -173511.343
+          H1 Value                     -173511.343
+
+Information Criteria
+
+          Akaike (AIC)                  347110.686
+          Bayesian (BIC)                347419.268
+          Sample-Size Adjusted BIC      347279.445
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            249.434
+          Degrees of Freedom                    13
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ HOMA     ON
+    DASH               0.107      0.069      1.549      0.121
+    BMI                0.260      0.025     10.244      0.000
+    AGE                0.008      0.005      1.445      0.148
+    GENDER            -0.267      0.177     -1.512      0.131
+    CAL               -0.973      1.566     -0.622      0.534
+    MET               -0.002      0.001     -3.240      0.001
+    INDEX              0.001      0.005      0.129      0.897
+
+ BMI      ON
+    DASH               0.020      0.039      0.512      0.609
+    AGE                0.014      0.003      5.219      0.000
+    GENDER             0.195      0.080      2.450      0.014
+    CAL                3.517      0.640      5.498      0.000
+    MET                0.000      0.000      1.271      0.204
+    INDEX              0.013      0.002      6.425      0.000
+
+ GENDER   WITH
+    AGE                0.074      0.086      0.864      0.387
+
+ DASH     WITH
+    AGE                0.433      0.176      2.463      0.014
+    GENDER             0.041      0.006      7.386      0.000
+
+ MET      WITH
+    AGE             -384.255     16.446    -23.365      0.000
+    GENDER            -1.872      0.617     -3.036      0.002
+    DASH              -3.959      1.183     -3.347      0.001
+
+ INDEX    WITH
+    AGE                9.625      3.285      2.930      0.003
+    GENDER             0.174      0.107      1.633      0.102
+    DASH               3.131      0.214     14.599      0.000
+    MET             -558.926     23.129    -24.165      0.000
+
+ CAL      WITH
+    AGE               -0.119      0.011    -10.468      0.000
+    GENDER            -0.009      0.000    -26.394      0.000
+    DASH              -0.009      0.001    -11.605      0.000
+    MET                1.036      0.079     13.186      0.000
+    INDEX             -0.135      0.014     -9.531      0.000
+
+ Means
+    AGE               49.986      0.161    310.977      0.000
+    GENDER             1.532      0.006    263.820      0.000
+    DASH               5.961      0.011    560.618      0.000
+    MET              117.346      1.203     97.545      0.000
+    INDEX             67.022      0.214    312.778      0.000
+    CAL                0.214      0.001    294.677      0.000
+
+ Intercepts
+    BMI               20.467      0.375     54.545      0.000
+    HOMA              -2.674      0.824     -3.246      0.001
+
+ Variances
+    AGE              224.948      3.044     73.909      0.000
+    GENDER             0.249      0.000    666.454      0.000
+    DASH               1.000      0.015     65.220      0.000
+    MET            11528.698    239.848     48.067      0.000
+    INDEX            378.733      3.519    107.618      0.000
+    CAL                0.004      0.000     40.318      0.000
+
+ Residual Variances
+    BMI               11.730      0.205     57.229      0.000
+    HOMA              45.767      9.517      4.809      0.000
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from DASH to HOMA
+
+  Total                0.112      0.071      1.588      0.112
+  Total indirect       0.005      0.010      0.503      0.615
+
+  Specific indirect
+
+    HOMA
+    BMI
+    DASH               0.005      0.010      0.503      0.615
+
+  Direct
+    HOMA
+    DASH               0.107      0.069      1.549      0.121
+
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ HOMA     ON
+    DASH            -0.070      -0.022      -0.006       0.107       0.221       0.242       0.305
+    BMI              0.203       0.213       0.220       0.260       0.305       0.314       0.340
+    AGE             -0.008      -0.003      -0.001       0.008       0.017       0.019       0.022
+    GENDER          -0.738      -0.616      -0.551      -0.267       0.023       0.084       0.217
+    CAL             -5.996      -4.208      -3.557      -0.973       1.620       2.147       3.718
+    MET             -0.004      -0.004      -0.003      -0.002      -0.001      -0.001      -0.001
+    INDEX           -0.013      -0.010      -0.008       0.001       0.009       0.012       0.015
+
+ BMI      ON
+    DASH            -0.087      -0.053      -0.044       0.020       0.083       0.096       0.116
+    AGE              0.006       0.009       0.010       0.014       0.019       0.020       0.021
+    GENDER          -0.003       0.038       0.064       0.195       0.327       0.347       0.401
+    CAL              1.606       2.195       2.434       3.517       4.510       4.684       5.064
+    MET             -0.001       0.000       0.000       0.000       0.001       0.001       0.001
+    INDEX            0.008       0.009       0.010       0.013       0.017       0.017       0.019
+
+ GENDER   WITH
+    AGE             -0.145      -0.089      -0.064       0.074       0.212       0.256       0.298
+
+ DASH     WITH
+    AGE             -0.037       0.086       0.141       0.433       0.719       0.769       0.861
+    GENDER           0.026       0.030       0.032       0.041       0.050       0.052       0.055
+
+ MET      WITH
+    AGE           -424.845    -417.521    -411.090    -384.255    -357.286    -353.837    -339.029
+    GENDER          -3.500      -3.138      -2.933      -1.872      -0.941      -0.702      -0.376
+    DASH            -7.061      -6.212      -5.963      -3.959      -2.013      -1.562      -0.661
+
+ INDEX    WITH
+    AGE              0.694       2.686       4.179       9.625      14.743      15.848      18.201
+    GENDER          -0.123      -0.027      -0.001       0.174       0.350       0.378       0.427
+    DASH             2.545       2.693       2.773       3.131       3.469       3.551       3.692
+    MET           -615.037    -604.201    -595.803    -558.926    -519.371    -511.411    -500.078
+
+ CAL      WITH
+    AGE             -0.148      -0.141      -0.138      -0.119      -0.101      -0.098      -0.091
+    GENDER          -0.010      -0.010      -0.010      -0.009      -0.009      -0.009      -0.009
+    DASH            -0.011      -0.010      -0.010      -0.009      -0.007      -0.007      -0.007
+    MET              0.834       0.879       0.908       1.036       1.164       1.193       1.224
+    INDEX           -0.170      -0.162      -0.157      -0.135      -0.111      -0.107      -0.096
+
+ Means
+    AGE             49.550      49.662      49.712      49.986      50.243      50.296      50.384
+    GENDER           1.517       1.520       1.522       1.532       1.542       1.543       1.547
+    DASH             5.931       5.939       5.943       5.961       5.978       5.981       5.987
+    MET            114.440     115.034     115.354     117.346     119.431     119.808     120.387
+    INDEX           66.475      66.614      66.664      67.022      67.386      67.449      67.552
+    CAL              0.212       0.212       0.213       0.214       0.215       0.215       0.216
+
+ Intercepts
+    BMI             19.474      19.772      19.863      20.467      21.068      21.221      21.520
+    HOMA            -4.910      -4.327      -4.062      -2.674      -1.323      -1.122      -0.628
+
+ Variances
+    AGE            216.813     218.934     219.609     224.948     229.934     230.750     232.518
+    GENDER           0.248       0.248       0.248       0.249       0.250       0.250       0.250
+    DASH             0.960       0.970       0.976       1.000       1.025       1.030       1.041
+    MET          10925.358   11086.736   11146.743   11528.698   11932.870   12021.647   12129.236
+    INDEX          368.690     371.933     372.868     378.733     384.594     385.928     387.250
+    CAL              0.004       0.004       0.004       0.004       0.005       0.005       0.005
+
+ Residual Variances
+    BMI             11.213      11.320      11.389      11.730      12.074      12.114      12.252
+    HOMA            24.273      28.498      31.147      45.767      62.777      66.897      73.234
+
+
+CONFIDENCE INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from DASH to HOMA
+
+  Total             -0.075      -0.017      -0.005       0.112       0.231       0.253       0.307
+  Total indirect    -0.024      -0.014      -0.011       0.005       0.022       0.026       0.035
+
+  Specific indirect
+
+    HOMA
+    BMI
+    DASH            -0.024      -0.014      -0.011       0.005       0.022       0.026       0.035
+
+  Direct
+    HOMA
+    DASH            -0.070      -0.022      -0.006       0.107       0.221       0.242       0.305
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\likai\documents\git_repo\dqmedi\mplus\dash homa bmi-covariates.dgm
+
+     Beginning Time:  10:18:25
+        Ending Time:  10:18:30
+       Elapsed Time:  00:00:05
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

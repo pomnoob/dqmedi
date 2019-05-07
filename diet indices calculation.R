@@ -88,8 +88,8 @@ pe.all <- pe.all %>%
   dplyr::rename(hip_c=U9,waist_c=U10,diabetes=U24A,MI=U24J,stroke=U24V,
                 cancer=U24W,smoke=U25,alcohol_d=U41,pregnant=U56,SSB_d=U230) %>%
   dplyr::mutate(bmi=WEIGHT/(HEIGHT/100)^2,hwr=waist_c/hip_c)%>%
-  dplyr::mutate(diastol=select(.,DIASTOL1,DIASTOL2,DIASTOL3) %>% rowMeans(na.rm = T),
-                systol=select(.,SYSTOL1,SYSTOL2,SYSTOL3) %>% rowMeans(na.rm = T))
+  dplyr::mutate(diastol=dplyr::select(.,DIASTOL1,DIASTOL2,DIASTOL3) %>% rowMeans(na.rm = T),
+                systol=dplyr::select(.,SYSTOL1,SYSTOL2,SYSTOL3) %>% rowMeans(na.rm = T))
 pe.all[pe.all=="NaN"] <- NA
 
 #Physical activity

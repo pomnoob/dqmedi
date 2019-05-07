@@ -1,0 +1,405 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/07/2019   1:34 PM
+
+INPUT INSTRUCTIONS
+
+  data: file is me2009 outlier.csv;
+
+  variable: names are IDind HS_CRP HDL_C LDL_C INS
+                      HbA1c GLUCOSE TG TC homa_ir quicki commid
+                      d3kcal d3carbo d3fat d3protn hhid WAVE
+                      hip_c waist_c bmi hwr diastol systol age
+                      gender educ indinc index met cmfp_s
+                      dash_s ahei_s cmfp dash
+                      ahei HBS LBS DQD;
+            usev are  age gender bmi HbA1c lbs met urban cal income;
+            missing are all(999);
+  define:
+  cal=d3kcal/10000;
+  urban=index/10;
+  income=indinc/10000;
+  analysis:
+      estimator = ML;
+      BOOTSTRAP = 1000;
+
+  model:
+  age gender bmi HbA1c lbs met urban cal income;
+
+  HbA1c on lbs bmi age gender met urban cal income;
+
+  bmi on lbs age gender met urban cal income;
+
+
+  Model indirect:
+  HbA1c ind lbs;
+
+
+  OUTPUT:
+  CINTERVAL(BOOTSTRAP);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        8211
+
+Number of dependent variables                                    2
+Number of independent variables                                  7
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   BMI         HBA1C
+
+Observed independent variables
+   AGE         GENDER      LBS         MET         URBAN       CAL
+   INCOME
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Number of bootstrap draws
+    Requested                                                 1000
+    Completed                                                 1000
+
+Input data file(s)
+  me2009 outlier.csv
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns            11
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              BMI           HBA1C         AGE           GENDER        LBS
+              ________      ________      ________      ________      ________
+ BMI            0.978
+ HBA1C          0.978         1.000
+ AGE            0.978         1.000         1.000
+ GENDER         0.978         1.000         1.000         1.000
+ LBS            0.965         0.984         0.984         0.984         0.984
+ MET            0.978         0.997         0.997         0.997         0.984
+ URBAN          0.965         0.983         0.983         0.983         0.983
+ CAL            0.965         0.984         0.984         0.984         0.984
+ INCOME         0.724         0.738         0.738         0.738         0.728
+
+
+           Covariance Coverage
+              MET           URBAN         CAL           INCOME
+              ________      ________      ________      ________
+ MET            0.997
+ URBAN          0.983         0.983
+ CAL            0.984         0.983         0.984
+ INCOME         0.738         0.728         0.728         0.738
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       54
+
+Loglikelihood
+
+          H0 Value                     -167009.256
+          H1 Value                     -167009.256
+
+Information Criteria
+
+          Akaike (AIC)                  334126.513
+          Bayesian (BIC)                334505.227
+          Sample-Size Adjusted BIC      334333.625
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            783.983
+          Degrees of Freedom                    15
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ HBA1C    ON
+    LBS                0.002      0.001      1.917      0.055
+    BMI                0.046      0.003     15.173      0.000
+    AGE                0.010      0.001     19.949      0.000
+    GENDER            -0.012      0.018     -0.632      0.527
+    MET                0.000      0.000     -0.294      0.769
+    URBAN              0.000      0.005     -0.080      0.937
+    CAL                0.070      0.136      0.518      0.605
+    INCOME             0.006      0.004      1.468      0.142
+
+ BMI      ON
+    LBS                0.009      0.006      1.583      0.113
+    AGE                0.015      0.003      5.374      0.000
+    GENDER             0.230      0.080      2.874      0.004
+    MET                0.000      0.000      1.221      0.222
+    URBAN              0.133      0.023      5.783      0.000
+    CAL                3.515      0.635      5.532      0.000
+    INCOME             0.063      0.021      3.054      0.002
+
+ GENDER   WITH
+    AGE                0.074      0.086      0.864      0.387
+
+ LBS      WITH
+    AGE                9.415      1.316      7.155      0.000
+    GENDER            -0.031      0.042     -0.739      0.460
+
+ MET      WITH
+    AGE             -384.521     16.426    -23.409      0.000
+    GENDER            -1.878      0.617     -3.043      0.002
+    LBS               58.293      8.930      6.528      0.000
+
+ URBAN    WITH
+    AGE                0.951      0.329      2.893      0.004
+    GENDER             0.018      0.011      1.665      0.096
+    LBS               -6.492      0.167    -38.767      0.000
+    MET              -55.879      2.317    -24.117      0.000
+
+ CAL      WITH
+    AGE               -0.119      0.011    -10.473      0.000
+    GENDER            -0.009      0.000    -26.395      0.000
+    LBS               -0.031      0.006     -5.367      0.000
+    MET                1.037      0.079     13.189      0.000
+    URBAN             -0.014      0.001     -9.492      0.000
+
+ INCOME   WITH
+    AGE               -2.009      0.378     -5.321      0.000
+    GENDER            -0.124      0.016     -7.901      0.000
+    LBS               -2.751      0.384     -7.159      0.000
+    MET               -0.234      2.712     -0.086      0.931
+    URBAN              0.925      0.122      7.605      0.000
+    CAL                0.008      0.003      3.096      0.002
+
+ Means
+    AGE               49.986      0.161    310.974      0.000
+    GENDER             1.532      0.006    263.820      0.000
+    LBS               24.188      0.090    268.241      0.000
+    MET              117.355      1.203     97.554      0.000
+    URBAN              6.705      0.021    312.863      0.000
+    CAL                0.214      0.001    294.547      0.000
+    INCOME             1.551      0.032     48.178      0.000
+
+ Intercepts
+    BMI               20.199      0.378     53.437      0.000
+    HBA1C              3.942      0.099     39.668      0.000
+
+ Variances
+    AGE              224.948      3.044     73.910      0.000
+    GENDER             0.249      0.000    666.436      0.000
+    LBS               60.993      1.096     55.664      0.000
+    MET            11528.967    239.874     48.063      0.000
+    URBAN              3.800      0.038     99.907      0.000
+    CAL                0.004      0.000     40.316      0.000
+    INCOME             6.320      1.123      5.630      0.000
+
+ Residual Variances
+    BMI               11.702      0.204     57.410      0.000
+    HBA1C              0.597      0.081      7.356      0.000
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from LBS to HBA1C
+
+  Total                0.003      0.001      2.210      0.027
+  Total indirect       0.000      0.000      1.571      0.116
+
+  Specific indirect
+
+    HBA1C
+    BMI
+    LBS                0.000      0.000      1.571      0.116
+
+  Direct
+    HBA1C
+    LBS                0.002      0.001      1.917      0.055
+
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ HBA1C    ON
+    LBS             -0.001       0.000       0.000       0.002       0.004       0.004       0.005
+    BMI              0.038       0.040       0.040       0.046       0.050       0.051       0.053
+    AGE              0.009       0.009       0.010       0.010       0.011       0.011       0.012
+    GENDER          -0.057      -0.045      -0.041      -0.012       0.020       0.026       0.033
+    MET              0.000       0.000       0.000       0.000       0.000       0.000       0.000
+    URBAN           -0.012      -0.010      -0.009       0.000       0.008       0.009       0.011
+    CAL             -0.296      -0.198      -0.152       0.070       0.288       0.331       0.394
+    INCOME          -0.004      -0.001       0.000       0.006       0.014       0.016       0.020
+
+ BMI      ON
+    LBS             -0.006      -0.002      -0.001       0.009       0.018       0.019       0.023
+    AGE              0.007       0.009       0.010       0.015       0.019       0.020       0.022
+    GENDER           0.018       0.072       0.099       0.230       0.362       0.388       0.443
+    MET             -0.001       0.000       0.000       0.000       0.001       0.001       0.001
+    URBAN            0.071       0.087       0.095       0.133       0.173       0.179       0.190
+    CAL              1.597       2.253       2.469       3.515       4.507       4.672       5.004
+    INCOME           0.011       0.028       0.032       0.063       0.099       0.108       0.125
+
+ GENDER   WITH
+    AGE             -0.145      -0.089      -0.064       0.074       0.212       0.256       0.298
+
+ LBS      WITH
+    AGE              5.928       6.968       7.274       9.415      11.670      12.043      12.993
+    GENDER          -0.157      -0.111      -0.099      -0.031       0.037       0.053       0.079
+
+ MET      WITH
+    AGE           -424.814    -417.641    -411.524    -384.521    -357.564    -354.055    -339.331
+    GENDER          -3.500      -3.158      -2.940      -1.878      -0.947      -0.702      -0.375
+    LBS             35.633      40.449      43.351      58.293      73.648      75.667      79.979
+
+ URBAN    WITH
+    AGE              0.051       0.247       0.408       0.951       1.462       1.567       1.832
+    GENDER          -0.012      -0.003       0.000       0.018       0.035       0.038       0.043
+    LBS             -6.944      -6.836      -6.782      -6.492      -6.228      -6.191      -6.096
+    MET            -61.496     -60.383     -59.573     -55.879     -51.912     -51.129     -49.927
+
+ CAL      WITH
+    AGE             -0.148      -0.141      -0.138      -0.119      -0.101      -0.098      -0.092
+    GENDER          -0.010      -0.010      -0.010      -0.009      -0.009      -0.009      -0.009
+    LBS             -0.047      -0.041      -0.040      -0.031      -0.021      -0.019      -0.016
+    MET              0.834       0.880       0.908       1.037       1.165       1.193       1.224
+    URBAN           -0.017      -0.016      -0.016      -0.014      -0.011      -0.011      -0.010
+
+ INCOME   WITH
+    AGE             -3.045      -2.719      -2.606      -2.009      -1.352      -1.249      -1.026
+    GENDER          -0.165      -0.155      -0.151      -0.124      -0.099      -0.094      -0.086
+    LBS             -4.041      -3.750      -3.477      -2.751      -2.229      -2.158      -2.010
+    MET             -6.382      -5.249      -4.647      -0.234       4.159       5.484       7.190
+    URBAN            0.699       0.743       0.761       0.925       1.167       1.196       1.279
+    CAL              0.002       0.003       0.004       0.008       0.013       0.014       0.015
+
+ Means
+    AGE             49.550      49.662      49.712      49.986      50.243      50.296      50.384
+    GENDER           1.517       1.520       1.522       1.532       1.542       1.543       1.547
+    LBS             23.939      23.999      24.041      24.188      24.332      24.356      24.404
+    MET            114.439     115.032     115.360     117.355     119.438     119.825     120.385
+    URBAN            6.651       6.663       6.669       6.705       6.741       6.748       6.759
+    CAL              0.212       0.212       0.213       0.214       0.215       0.215       0.216
+    INCOME           1.471       1.488       1.498       1.551       1.603       1.614       1.639
+
+ Intercepts
+    BMI             19.162      19.435      19.593      20.199      20.828      20.975      21.121
+    HBA1C            3.684       3.737       3.770       3.942       4.098       4.140       4.189
+
+ Variances
+    AGE            216.813     218.934     219.609     224.948     229.934     230.750     232.518
+    GENDER           0.248       0.248       0.248       0.249       0.250       0.250       0.250
+    LBS             57.915      58.935      59.113      60.993      62.855      63.214      63.901
+    MET          10925.112   11087.187   11146.583   11528.967   11933.478   12021.623   12129.060
+    URBAN            3.705       3.730       3.738       3.800       3.864       3.876       3.903
+    CAL              0.004       0.004       0.004       0.004       0.005       0.005       0.005
+    INCOME           3.898       4.275       4.563       6.320       8.202       8.847       9.939
+
+ Residual Variances
+    BMI             11.170      11.293      11.355      11.702      12.037      12.094      12.216
+    HBA1C            0.458       0.474       0.486       0.597       0.747       0.774       0.858
+
+
+CONFIDENCE INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from LBS to HBA1C
+
+  Total              0.000       0.000       0.001       0.003       0.004       0.005       0.006
+  Total indirect     0.000       0.000       0.000       0.000       0.001       0.001       0.001
+
+  Specific indirect
+
+    HBA1C
+    BMI
+    LBS              0.000       0.000       0.000       0.000       0.001       0.001       0.001
+
+  Direct
+    HBA1C
+    LBS             -0.001       0.000       0.000       0.002       0.004       0.004       0.005
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\likai\documents\git_repo\dqmedi\mplus\lbs hba1c bmi-outlier.dgm
+
+     Beginning Time:  13:34:41
+        Ending Time:  13:34:48
+       Elapsed Time:  00:00:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

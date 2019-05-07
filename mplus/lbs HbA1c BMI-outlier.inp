@@ -1,0 +1,33 @@
+data: file is me2009 outlier.csv;
+
+variable: names are IDind HS_CRP HDL_C LDL_C INS 
+                    HbA1c GLUCOSE TG TC homa_ir quicki commid 
+                    d3kcal d3carbo d3fat d3protn hhid WAVE 
+                    hip_c waist_c bmi hwr diastol systol age 
+                    gender educ indinc index met cmfp_s 
+                    dash_s ahei_s cmfp dash 
+                    ahei HBS LBS DQD;
+          usev are  age gender bmi HbA1c lbs met urban cal income;
+          missing are all(999);        
+define:
+cal=d3kcal/10000; 
+urban=index/10;
+income=indinc/10000;
+analysis:
+    estimator = ML;
+    BOOTSTRAP = 1000;
+
+model:
+age gender bmi HbA1c lbs met urban cal income;
+
+HbA1c on lbs bmi age gender met urban cal income;
+
+bmi on lbs age gender met urban cal income;
+
+
+Model indirect:
+HbA1c ind lbs;
+
+
+OUTPUT:
+CINTERVAL(BOOTSTRAP);

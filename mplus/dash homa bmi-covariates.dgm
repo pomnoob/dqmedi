@@ -1,0 +1,79 @@
+VERSION 1.1.0
+INPUT
+DATA:
+ file is me2009.csv;
+VARIABLE:
+ names are ID HS_CRP HDL LDL INS HbA1c
+                    GLUCOSE TG TC homa quicki hhidx
+                    commid d3kcal d3carbo d3fat d3protn
+                    hhidy WAVE SYSTOL1 SYSTOL2 SYSTOL3
+                    DIASTOL1 DIASTOL2 DIASTOL3 HEIGHT
+                    WEIGHT hip_c waist_c bmi hwr diastol
+                    systol age gender educ indinc index
+                    met cmfp_s dash_s ahei_s cmfp dash ahei;
+          usev are  age gender bmi homa dash met index cal;
+          missing are all(999);
+DEFINE:
+cal=d3kcal/10000;
+ANALYSIS:
+    estimator = ML;
+    BOOTSTRAP = 1000;
+OUTPUT:
+CINTERVAL(BOOTSTRAP);
+MODEL:
+age gender bmi homa dash met index cal;
+homa on dash bmi age gender cal met index;
+bmi on dash age gender cal met index;
+INPUT_END
+3
+0
+0
+0
+ML
+1
+GENERAL
+0
+8
+0
+0
+bmi homa age gender dash met index cal
+3
+1 2 0 0 0 0 0 0
+0
+0
+1 1 dash homa     0.107     0.069    -0.028     0.243
+1 1 bmi homa     0.260     0.025     0.210     0.310
+1 1 age homa     0.008     0.005    -0.003     0.018
+1 1 gender homa    -0.267     0.177    -0.614     0.079
+1 1 cal homa    -0.973     1.566    -4.042     2.095
+1 1 met homa    -0.002     0.001    -0.004    -0.001
+1 1 index homa     0.001     0.005    -0.010     0.011
+1 1 dash bmi     0.020     0.039    -0.057     0.097
+1 1 age bmi     0.014     0.003     0.009     0.020
+1 1 gender bmi     0.195     0.080     0.039     0.351
+1 1 cal bmi     3.517     0.640     2.264     4.771
+1 1 met bmi     0.000     0.000     0.000     0.001
+1 1 index bmi     0.013     0.002     0.009     0.017
+2 1 gender age     0.074     0.086    -0.094     0.243
+2 1 dash age     0.433     0.176     0.088     0.778
+2 1 dash gender     0.041     0.006     0.030     0.052
+2 1 met age  -384.255    16.446  -416.489  -352.021
+2 1 met gender    -1.872     0.617    -3.081    -0.664
+2 1 met dash    -3.959     1.183    -6.277    -1.641
+2 1 index age     9.625     3.285     3.187    16.063
+2 1 index gender     0.174     0.107    -0.035     0.383
+2 1 index dash     3.131     0.214     2.711     3.551
+2 1 index met  -558.926    23.129  -604.259  -513.592
+2 1 cal age    -0.119     0.011    -0.141    -0.096
+2 1 cal gender    -0.009     0.000    -0.010    -0.009
+2 1 cal dash    -0.009     0.001    -0.010    -0.007
+2 1 cal met     1.036     0.079     0.882     1.190
+2 1 cal index    -0.135     0.014    -0.163    -0.107
+4 1 bmi    11.730     0.205    11.328    12.131
+4 1 homa    45.767     9.517    27.113    64.420
+5 1 age   224.948     3.044   218.982   230.913
+5 1 gender     0.249     0.000     0.248     0.250
+5 1 dash     1.000     0.015     0.970     1.030
+5 1 met 11528.698   239.848 11058.597 11998.800
+5 1 index   378.733     3.519   371.836   385.631
+5 1 cal     0.004     0.000     0.004     0.005

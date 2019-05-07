@@ -8,7 +8,7 @@ variable: names are ID HS_CRP HDL LDL INS HbA1c
                     WEIGHT hip_c waist_c bmi hwr diastol 
                     systol age gender educ indinc index 
                     met cmfp_s dash_s ahei_s cmfp dash ahei;
-          usev are  age gender bmi HbA1c dash cal;
+          usev are  age gender bmi homa dash met index cal;
           missing are all(999);        
 define:
 cal=d3kcal/10000; 
@@ -18,15 +18,15 @@ analysis:
     BOOTSTRAP = 1000;
 
 model:
-age gender bmi HbA1c dash cal;
+age gender bmi homa dash met index cal;
 
-HbA1c on dash bmi age gender cal;
+homa on dash bmi age gender cal met index;
 
-bmi on dash age gender cal;
+bmi on dash age gender cal met index;
 
 
 Model indirect:
-HbA1c ind dash;
+homa ind dash;
 
 
 OUTPUT:

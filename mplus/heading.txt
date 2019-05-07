@@ -1,3 +1,1 @@
-IDind WAVE hhid age commid d3kcal d3carbo d3fat d3protn bmi hwr waist_c 
-diastol systol gender educ indinc index met cmfp_s dash_s ahei_s HS_CRP 
-HDL_C LDL_C INS HbA1c GLUCOSE TG TC homa_ir quicki cmfp dash ahei
+IDind HS_CRP HDL_C LDL_C INS HbA1c GLUCOSE TG TC homa_ir quicki commid d3kcal d3carbo d3fat d3protn hhid WAVE hip_c waist_c bmi hwr diastol systol age gender educ indinc index met cmfp_score dash_score ahei_score cmfp dash ahei HBS LBS DQD
