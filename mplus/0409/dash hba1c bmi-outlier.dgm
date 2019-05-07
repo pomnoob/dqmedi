@@ -1,0 +1,79 @@
+VERSION 1.1.0
+INPUT
+DATA:
+ file is me0409 outlier.csv;
+VARIABLE:
+ names are IDind commid d3kcal d3carbo d3fat
+                    d3protn hhid WAVE hip_c waist_c hwr
+                    diastol systol age gender educ indinc
+                    index met cmfp_s dash_s ahei_s
+                    cmfp dash ahei HBS LBS DQD bmi06 HS_CRP
+                     HDL_C LDL_C INS HbA1c GLUCOSE
+                     TG TC homa_ir quicki;
+          usev are  age gender bmi06 HbA1c dash index met cal;
+          missing are all(999);
+DEFINE:
+cal=d3kcal/10000;
+ANALYSIS:
+    estimator = bayes;
+    process = 2;
+    biter = (20000);
+OUTPUT:
+CINTERVAL;
+MODEL:
+age gender bmi06 HbA1c dash cal met index;
+HbA1c on dash bmi06 age gender cal met index;
+bmi06 on dash age gender cal met index;
+INPUT_END
+3
+0
+0
+0
+BAYES
+1
+GENERAL
+0
+8
+0
+0
+bmi06 hba1c age gender dash index met cal
+3
+1 2 0 0 0 0 0 0
+0
+0
+1 1 dash hba1c     0.039     0.006     0.027     0.051
+1 1 bmi06 hba1c     0.031     0.002     0.027     0.034
+1 1 age hba1c     0.008     0.000     0.007     0.009
+1 1 gender hba1c    -0.012     0.013    -0.037     0.013
+1 1 cal hba1c    -0.089     0.096    -0.278     0.097
+1 1 met hba1c     0.000     0.000     0.000     0.000
+1 1 index hba1c    -0.001     0.000    -0.001     0.000
+1 1 dash bmi06     0.097     0.043     0.014     0.180
+1 1 age bmi06     0.000     0.003    -0.006     0.006
+1 1 gender bmi06     0.348     0.089     0.171     0.519
+1 1 cal bmi06     3.066     0.673     1.736     4.385
+1 1 met bmi06     0.000     0.000    -0.001     0.001
+1 1 index bmi06     0.015     0.002     0.011     0.020
+2 1 gender age     0.199     0.079     0.045     0.352
+2 1 dash age     0.530     0.158     0.224     0.837
+2 1 dash gender     0.029     0.005     0.019     0.039
+2 1 index age    20.762     3.179    14.583    26.994
+2 1 index gender     0.113     0.105    -0.094     0.318
+2 1 index dash     1.436     0.209     1.028     1.846
+2 1 met age  -419.264    19.986  -458.385  -379.746
+2 1 met gender    -8.105     0.609    -9.314    -6.921
+2 1 met dash    -2.288     1.200    -4.608     0.082
+2 1 met index  -684.123    25.587  -735.127  -634.802
+2 1 cal age    -0.137     0.011    -0.158    -0.115
+2 1 cal gender    -0.009     0.000    -0.010    -0.008
+2 1 cal dash    -0.003     0.001    -0.004    -0.002
+2 1 cal index    -0.100     0.014    -0.128    -0.073
+2 1 cal met     1.595     0.084     1.430     1.762
+4 1 bmi06    12.691     0.213    12.280    13.117
+4 1 hba1c     0.193     0.004     0.186     0.200
+5 1 age   235.782     3.404   229.246   242.728
+5 1 gender     0.250     0.004     0.243     0.257
+5 1 dash     1.002     0.014     0.974     1.030
+5 1 index   411.119     5.950   399.913   423.008
+5 1 met 12736.159   195.812 12365.904 13130.425
+5 1 cal     0.005     0.000     0.004     0.005

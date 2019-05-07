@@ -81,6 +81,9 @@ Serving size: vegetables and fruit: 80g; dairy: 245g; meat, poultry and fish: 28
 3. Nuts and legumes
 4. Red/processed meat
 5. Alcohol
+51.wine
+52.beer
+53.liquor
 6. SSB/Juice
 7. EPA and DHA
 8. PUFA

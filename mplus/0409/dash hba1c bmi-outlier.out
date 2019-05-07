@@ -1,0 +1,359 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/07/2019   5:21 PM
+
+INPUT INSTRUCTIONS
+
+  data: file is me0409 outlier.csv;
+
+  variable: names are IDind commid d3kcal d3carbo d3fat
+                      d3protn hhid WAVE hip_c waist_c hwr
+                      diastol systol age gender educ indinc
+                      index met cmfp_s dash_s ahei_s
+                      cmfp dash ahei HBS LBS DQD bmi06 HS_CRP
+                       HDL_C LDL_C INS HbA1c GLUCOSE
+                       TG TC homa_ir quicki;
+
+            usev are  age gender bmi06 HbA1c dash index met cal;
+            missing are all(999);
+  define:
+  cal=d3kcal/10000;
+
+  analysis:
+      estimator = bayes;
+      process = 2;
+      biter = (20000);
+
+  model:
+  age gender bmi06 HbA1c dash cal met index;
+
+  HbA1c on dash bmi06 age gender cal met index;
+
+  bmi06 on dash age gender cal met index;
+
+
+  Model indirect:
+  HbA1c ind dash;
+
+
+  OUTPUT:
+  CINTERVAL;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        9547
+
+Number of dependent variables                                    2
+Number of independent variables                                  6
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   BMI06       HBA1C
+
+Observed independent variables
+   AGE         GENDER      DASH        INDEX       MET         CAL
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  me0409 outlier.csv
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns            10
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              BMI06         HBA1C         AGE           GENDER        DASH
+              ________      ________      ________      ________      ________
+ BMI06          0.738
+ HBA1C          0.491         0.563
+ AGE            0.738         0.563         1.000
+ GENDER         0.738         0.563         1.000         1.000
+ DASH           0.738         0.563         1.000         1.000         1.000
+ INDEX          0.738         0.563         0.999         0.999         0.999
+ MET            0.677         0.521         0.901         0.901         0.901
+ CAL            0.738         0.563         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              INDEX         MET           CAL
+              ________      ________      ________
+ INDEX          0.999
+ MET            0.900         0.901
+ CAL            0.999         0.901         1.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              44
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -25.833            26.523
+
+          Posterior Predictive P-Value              0.507
+
+Information Criteria
+
+          Deviance (DIC)                       327780.972
+          Estimated Number of Parameters (pD)      43.754
+          Bayesian (BIC)                       328096.673
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ HBA1C      ON
+    DASH               0.039       0.006      0.000       0.027       0.051      *
+    BMI06              0.031       0.002      0.000       0.027       0.034      *
+    AGE                0.008       0.000      0.000       0.007       0.009      *
+    GENDER            -0.012       0.013      0.174      -0.037       0.013
+    CAL               -0.089       0.096      0.178      -0.278       0.097
+    MET                0.000       0.000      0.405       0.000       0.000
+    INDEX             -0.001       0.000      0.019      -0.001       0.000      *
+
+ BMI06      ON
+    DASH               0.097       0.043      0.011       0.014       0.180      *
+    AGE                0.000       0.003      0.461      -0.006       0.006
+    GENDER             0.348       0.089      0.000       0.171       0.519      *
+    CAL                3.066       0.673      0.000       1.736       4.385      *
+    MET                0.000       0.000      0.479      -0.001       0.001
+    INDEX              0.015       0.002      0.000       0.011       0.020      *
+
+ GENDER   WITH
+    AGE                0.199       0.079      0.006       0.045       0.352      *
+
+ DASH     WITH
+    AGE                0.530       0.158      0.000       0.224       0.837      *
+    GENDER             0.029       0.005      0.000       0.019       0.039      *
+
+ INDEX    WITH
+    AGE               20.762       3.179      0.000      14.583      26.994      *
+    GENDER             0.113       0.105      0.141      -0.094       0.318
+    DASH               1.436       0.209      0.000       1.028       1.846      *
+
+ MET      WITH
+    AGE             -419.264      19.986      0.000    -458.385    -379.746      *
+    GENDER            -8.105       0.609      0.000      -9.314      -6.921      *
+    DASH              -2.288       1.200      0.030      -4.608       0.082
+    INDEX           -684.123      25.587      0.000    -735.127    -634.802      *
+
+ CAL      WITH
+    AGE               -0.137       0.011      0.000      -0.158      -0.115      *
+    GENDER            -0.009       0.000      0.000      -0.010      -0.008      *
+    DASH              -0.003       0.001      0.000      -0.004      -0.002      *
+    INDEX             -0.100       0.014      0.000      -0.128      -0.073      *
+    MET                1.595       0.084      0.000       1.430       1.762      *
+
+ Means
+    AGE               47.387       0.156      0.000      47.078      47.693      *
+    GENDER             1.519       0.005      0.000       1.509       1.529      *
+    DASH               6.201       0.010      0.000       6.180       6.220      *
+    INDEX             62.550       0.206      0.000      62.145      62.954      *
+    MET              116.450       1.211      0.000     114.080     118.837      *
+    CAL                0.219       0.001      0.000       0.217       0.220      *
+
+ Intercepts
+    BMI06             20.431       0.421      0.000      19.614      21.265      *
+    HBA1C              4.256       0.070      0.000       4.119       4.395      *
+
+ Variances
+    AGE              235.782       3.404      0.000     229.246     242.728      *
+    GENDER             0.250       0.004      0.000       0.243       0.257      *
+    DASH               1.002       0.014      0.000       0.974       1.030      *
+    INDEX            411.119       5.950      0.000     399.913     423.008      *
+    MET            12736.159     195.812      0.000   12365.904   13130.425      *
+    CAL                0.005       0.000      0.000       0.004       0.005      *
+
+ Residual Variances
+    BMI06             12.691       0.213      0.000      12.280      13.117      *
+    HBA1C              0.193       0.004      0.000       0.186       0.200      *
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+Effects from DASH to HBA1C
+
+    Total              0.042       0.006      0.000       0.030       0.054      *
+    Total indirect     0.003       0.001      0.011       0.000       0.006      *
+
+  Specific indirect
+
+    HBA1C
+    BMI06
+    DASH               0.003       0.001      0.011       0.000       0.006      *
+
+  Direct
+    HBA1C
+    DASH               0.039       0.006      0.000       0.027       0.051      *
+
+
+
+CREDIBILITY INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ HBA1C    ON
+    DASH             0.024       0.027       0.029       0.039       0.049       0.051       0.055
+    BMI06            0.026       0.027       0.028       0.031       0.034       0.034       0.035
+    AGE              0.007       0.007       0.007       0.008       0.009       0.009       0.009
+    GENDER          -0.044      -0.037      -0.033      -0.012       0.009       0.013       0.021
+    CAL             -0.337      -0.278      -0.248      -0.089       0.068       0.097       0.162
+    MET              0.000       0.000       0.000       0.000       0.000       0.000       0.000
+    INDEX           -0.002      -0.001      -0.001      -0.001       0.000       0.000       0.000
+
+ BMI06    ON
+    DASH            -0.013       0.014       0.027       0.097       0.167       0.180       0.208
+    AGE             -0.008      -0.006      -0.005       0.000       0.005       0.006       0.008
+    GENDER           0.121       0.171       0.200       0.348       0.493       0.519       0.572
+    CAL              1.318       1.736       1.956       3.066       4.168       4.385       4.801
+    MET             -0.001      -0.001      -0.001       0.000       0.001       0.001       0.001
+    INDEX            0.010       0.011       0.012       0.015       0.019       0.020       0.021
+
+ GENDER   WITH
+    AGE             -0.005       0.045       0.069       0.199       0.328       0.352       0.398
+
+ DASH     WITH
+    AGE              0.120       0.224       0.274       0.530       0.786       0.837       0.935
+    GENDER           0.016       0.019       0.020       0.029       0.037       0.039       0.042
+
+ INDEX    WITH
+    AGE             12.330      14.583      15.570      20.762      25.952      26.994      29.067
+    GENDER          -0.158      -0.094      -0.060       0.113       0.286       0.318       0.383
+    DASH             0.904       1.028       1.092       1.436       1.780       1.846       1.979
+
+ MET      WITH
+    AGE           -470.812    -458.385    -452.042    -419.264    -386.406    -379.746    -367.053
+    GENDER          -9.686      -9.314      -9.118      -8.105      -7.113      -6.921      -6.509
+    DASH            -5.398      -4.608      -4.250      -2.288      -0.287       0.082       0.789
+    INDEX         -750.696    -735.127    -726.610    -684.123    -643.032    -634.802    -619.586
+
+ CAL      WITH
+    AGE             -0.164      -0.158      -0.154      -0.137      -0.119      -0.115      -0.108
+    GENDER          -0.010      -0.010      -0.010      -0.009      -0.009      -0.008      -0.008
+    DASH            -0.005      -0.004      -0.004      -0.003      -0.002      -0.002      -0.001
+    INDEX           -0.137      -0.128      -0.123      -0.100      -0.077      -0.073      -0.064
+    MET              1.383       1.430       1.456       1.595       1.735       1.762       1.813
+
+ Means
+    AGE             46.976      47.078      47.130      47.387      47.643      47.693      47.788
+    GENDER           1.506       1.509       1.511       1.519       1.527       1.529       1.532
+    DASH             6.174       6.180       6.184       6.201       6.217       6.220       6.227
+    INDEX           62.028      62.145      62.210      62.550      62.890      62.954      63.079
+    MET            113.294     114.080     114.473     116.450     118.456     118.837     119.530
+    CAL              0.217       0.217       0.218       0.219       0.220       0.220       0.221
+
+ Intercepts
+    BMI06           19.341      19.614      19.741      20.431      21.121      21.265      21.517
+    HBA1C            4.077       4.119       4.140       4.256       4.372       4.395       4.437
+
+ Variances
+    AGE            227.256     229.246     230.311     235.782     241.552     242.728     244.822
+    GENDER           0.241       0.243       0.244       0.250       0.256       0.257       0.260
+    DASH             0.965       0.974       0.978       1.002       1.026       1.030       1.039
+    INDEX          396.207     399.913     401.568     411.119     421.084     423.008     427.006
+    MET          12251.342   12365.904   12423.020   12736.159   13070.576   13130.425   13258.366
+    CAL              0.004       0.004       0.004       0.005       0.005       0.005       0.005
+
+ Residual Variances
+    BMI06           12.165      12.280      12.346      12.691      13.042      13.117      13.247
+    HBA1C            0.184       0.186       0.187       0.193       0.199       0.200       0.203
+
+
+CREDIBILITY INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from DASH to HBA1C
+
+  Total              0.026       0.030       0.032       0.042       0.052       0.054       0.058
+  Total indirect     0.000       0.000       0.001       0.003       0.005       0.006       0.007
+
+  Specific indirect
+
+    HBA1C
+    BMI06
+    DASH             0.000       0.000       0.001       0.003       0.005       0.006       0.007
+
+  Direct
+    HBA1C
+    DASH             0.024       0.027       0.029       0.039       0.049       0.051       0.055
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\likai\documents\git_repo\dqmedi\mplus\0409\dash hba1c bmi-outlier.dgm
+
+     Beginning Time:  17:21:11
+        Ending Time:  17:22:31
+       Elapsed Time:  00:01:20
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

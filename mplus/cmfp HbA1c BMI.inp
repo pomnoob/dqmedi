@@ -1,0 +1,33 @@
+data: file is me2009.csv;
+
+variable: names are ID HS_CRP HDL LDL INS HbA1c 
+                    GLUCOSE TG TC homa quicki hhidx 
+                    commid d3kcal d3carbo d3fat d3protn 
+                    hhidy WAVE SYSTOL1 SYSTOL2 SYSTOL3 
+                    DIASTOL1 DIASTOL2 DIASTOL3 HEIGHT 
+                    WEIGHT hip_c waist_c bmi hwr diastol 
+                    systol age gender educ indinc index 
+                    met cmfp_s dash_s ahei_s cmfp dash ahei;
+          usev are  age gender bmi HbA1c cmfp cal;
+          missing are all(999);        
+define:
+cal=d3kcal/10000; 
+
+analysis:
+    estimator = ML;
+    BOOTSTRAP = 1000;
+
+model:
+age gender bmi HbA1c cmfp cal;
+
+HbA1c on cmfp bmi age gender cal;
+
+bmi on cmfp age gender cal;
+
+
+Model indirect:
+HbA1c ind cmfp;
+
+
+OUTPUT:
+CINTERVAL(BOOTSTRAP);

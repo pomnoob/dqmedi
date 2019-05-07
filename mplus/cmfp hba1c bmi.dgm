@@ -1,0 +1,64 @@
+VERSION 1.1.0
+INPUT
+DATA:
+ file is me2009.csv;
+VARIABLE:
+ names are ID HS_CRP HDL LDL INS HbA1c
+                    GLUCOSE TG TC homa quicki hhidx
+                    commid d3kcal d3carbo d3fat d3protn
+                    hhidy WAVE SYSTOL1 SYSTOL2 SYSTOL3
+                    DIASTOL1 DIASTOL2 DIASTOL3 HEIGHT
+                    WEIGHT hip_c waist_c bmi hwr diastol
+                    systol age gender educ indinc index
+                    met cmfp_s dash_s ahei_s cmfp dash ahei;
+          usev are  age gender bmi HbA1c cmfp cal;
+          missing are all(999);
+DEFINE:
+cal=d3kcal/10000;
+ANALYSIS:
+    estimator = ML;
+    BOOTSTRAP = 1000;
+OUTPUT:
+CINTERVAL(BOOTSTRAP);
+MODEL:
+age gender bmi HbA1c cmfp cal;
+HbA1c on cmfp bmi age gender cal;
+bmi on cmfp age gender cal;
+INPUT_END
+3
+0
+0
+0
+ML
+1
+GENERAL
+0
+6
+0
+0
+bmi hba1c age gender cmfp cal
+3
+1 2 0 0 0 0
+0
+0
+1 1 cmfp hba1c   -0.012    0.008   -0.027    0.003
+1 1 bmi hba1c    0.046    0.003    0.040    0.052
+1 1 age hba1c    0.010    0.001    0.009    0.011
+1 1 gender hba1c   -0.015    0.018   -0.051    0.021
+1 1 cal hba1c    0.051    0.132   -0.209    0.310
+1 1 cmfp bmi    0.010    0.039   -0.066    0.086
+1 1 age bmi    0.014    0.003    0.009    0.020
+1 1 gender bmi    0.189    0.080    0.032    0.346
+1 1 cal bmi    3.152    0.628    1.922    4.383
+2 1 gender age    0.074    0.086   -0.094    0.243
+2 1 cmfp age   -0.419    0.177   -0.766   -0.072
+2 1 cmfp gender    0.018    0.005    0.007    0.029
+2 1 cal age   -0.119    0.011   -0.141   -0.097
+2 1 cal gender   -0.009    0.000   -0.010   -0.009
+2 1 cal cmfp   -0.001    0.001   -0.003    0.000
+4 1 bmi   11.789    0.205   11.386   12.191
+4 1 hba1c    0.597    0.081    0.438    0.756
+5 1 age  224.948    3.044  218.982  230.913
+5 1 gender    0.249    0.000    0.248    0.250
+5 1 cmfp    1.000    0.015    0.970    1.030
+5 1 cal    0.004    0.000    0.004    0.005

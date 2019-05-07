@@ -1,0 +1,359 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/07/2019   5:23 PM
+
+INPUT INSTRUCTIONS
+
+  data: file is me0409 outlier.csv;
+
+  variable: names are IDind commid d3kcal d3carbo d3fat
+                      d3protn hhid WAVE hip_c waist_c hwr
+                      diastol systol age gender educ indinc
+                      index met cmfp_s dash_s ahei_s
+                      cmfp dash ahei HBS LBS DQD bmi06 HS_CRP
+                       HDL_C LDL_C INS HbA1c GLUCOSE
+                       TG TC homa_ir quicki;
+
+            usev are  age gender bmi06 HbA1c cmfp index met cal;
+            missing are all(999);
+  define:
+  cal=d3kcal/10000;
+
+  analysis:
+      estimator = bayes;
+      process = 2;
+      biter = (20000);
+
+  model:
+  age gender bmi06 HbA1c cmfp cal met index;
+
+  HbA1c on cmfp bmi06 age gender cal met index;
+
+  bmi06 on cmfp age gender cal met index;
+
+
+  Model indirect:
+  HbA1c ind cmfp;
+
+
+  OUTPUT:
+  CINTERVAL;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        9547
+
+Number of dependent variables                                    2
+Number of independent variables                                  6
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   BMI06       HBA1C
+
+Observed independent variables
+   AGE         GENDER      CMFP        INDEX       MET         CAL
+
+
+Estimator                                                    BAYES
+Specifications for Bayesian Estimation
+  Point estimate                                            MEDIAN
+  Number of Markov chain Monte Carlo (MCMC) chains               2
+  Random seed for the first chain                                0
+  Starting value information                           UNPERTURBED
+  Treatment of categorical mediator                         LATENT
+  Algorithm used for Markov chain Monte Carlo           GIBBS(PX1)
+  Convergence criterion                                  0.500D-01
+  Maximum number of iterations                               50000
+  K-th iteration used for thinning                               1
+
+Input data file(s)
+  me0409 outlier.csv
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+     Number of missing data patterns            10
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              BMI06         HBA1C         AGE           GENDER        CMFP
+              ________      ________      ________      ________      ________
+ BMI06          0.738
+ HBA1C          0.491         0.563
+ AGE            0.738         0.563         1.000
+ GENDER         0.738         0.563         1.000         1.000
+ CMFP           0.738         0.563         1.000         1.000         1.000
+ INDEX          0.738         0.563         0.999         0.999         0.999
+ MET            0.677         0.521         0.901         0.901         0.901
+ CAL            0.738         0.563         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              INDEX         MET           CAL
+              ________      ________      ________
+ INDEX          0.999
+ MET            0.900         0.901
+ CAL            0.999         0.901         1.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     USE THE FBITERATIONS OPTION TO INCREASE THE NUMBER OF ITERATIONS BY A FACTOR
+     OF AT LEAST TWO TO CHECK CONVERGENCE AND THAT THE PSR VALUE DOES NOT INCREASE.
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                              44
+
+Bayesian Posterior Predictive Checking using Chi-Square
+
+          95% Confidence Interval for the Difference Between
+          the Observed and the Replicated Chi-Square Values
+
+                                -25.818            26.528
+
+          Posterior Predictive P-Value              0.508
+
+Information Criteria
+
+          Deviance (DIC)                       327394.098
+          Estimated Number of Parameters (pD)      43.726
+          Bayesian (BIC)                       327709.859
+
+
+
+MODEL RESULTS
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+ HBA1C      ON
+    CMFP               0.024       0.006      0.000       0.012       0.037      *
+    BMI06              0.031       0.002      0.000       0.027       0.034      *
+    AGE                0.008       0.000      0.000       0.007       0.009      *
+    GENDER            -0.011       0.013      0.201      -0.036       0.014
+    CAL               -0.131       0.097      0.085      -0.322       0.055
+    MET                0.000       0.000      0.418       0.000       0.000
+    INDEX             -0.001       0.000      0.009      -0.001       0.000      *
+
+ BMI06      ON
+    CMFP               0.050       0.044      0.126      -0.036       0.135
+    AGE                0.001       0.003      0.433      -0.006       0.007
+    GENDER             0.354       0.089      0.000       0.178       0.525      *
+    CAL                2.980       0.673      0.000       1.661       4.285      *
+    MET                0.000       0.000      0.486      -0.001       0.001
+    INDEX              0.015       0.002      0.000       0.011       0.020      *
+
+ GENDER   WITH
+    AGE                0.199       0.079      0.006       0.044       0.353      *
+
+ CMFP     WITH
+    AGE                0.147       0.158      0.175      -0.158       0.455
+    GENDER             0.017       0.005      0.000       0.007       0.027      *
+
+ INDEX    WITH
+    AGE               20.720       3.180      0.000      14.554      26.955      *
+    GENDER             0.113       0.105      0.140      -0.094       0.318
+    CMFP               4.395       0.213      0.000       3.982       4.821      *
+
+ MET      WITH
+    AGE             -419.600      19.982      0.000    -458.582    -380.045      *
+    GENDER            -8.104       0.609      0.000      -9.313      -6.919      *
+    CMFP              -2.029       1.206      0.048      -4.369       0.368
+    INDEX           -684.289      25.588      0.000    -735.327    -634.981      *
+
+ CAL      WITH
+    AGE               -0.137       0.011      0.000      -0.158      -0.115      *
+    GENDER            -0.009       0.000      0.000      -0.010      -0.008      *
+    CMFP               0.002       0.001      0.010       0.000       0.003      *
+    INDEX             -0.100       0.014      0.000      -0.128      -0.073      *
+    MET                1.596       0.084      0.000       1.432       1.764      *
+
+ Means
+    AGE               47.387       0.156      0.000      47.078      47.693      *
+    GENDER             1.519       0.005      0.000       1.509       1.529      *
+    CMFP               3.970       0.010      0.000       3.950       3.990      *
+    INDEX             62.556       0.205      0.000      62.153      62.962      *
+    MET              116.387       1.210      0.000     114.018     118.778      *
+    CAL                0.219       0.001      0.000       0.217       0.220      *
+
+ Intercepts
+    BMI06             20.840       0.363      0.000      20.135      21.553      *
+    HBA1C              4.409       0.064      0.000       4.284       4.535      *
+
+ Variances
+    AGE              235.781       3.403      0.000     229.246     242.728      *
+    GENDER             0.250       0.004      0.000       0.243       0.257      *
+    CMFP               1.001       0.014      0.000       0.974       1.030      *
+    INDEX            411.198       5.953      0.000     399.974     423.122      *
+    MET            12737.718     195.852      0.000   12367.616   13132.374      *
+    CAL                0.005       0.000      0.000       0.004       0.005      *
+
+ Residual Variances
+    BMI06             12.698       0.213      0.000      12.287      13.124      *
+    HBA1C              0.194       0.004      0.000       0.187       0.201      *
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                Posterior  One-Tailed         95% C.I.
+                    Estimate       S.D.      P-Value   Lower 2.5%  Upper 2.5%  Significance
+
+Effects from CMFP to HBA1C
+
+    Total              0.026       0.006      0.000       0.013       0.038      *
+    Total indirect     0.002       0.001      0.126      -0.001       0.004
+
+  Specific indirect
+
+    HBA1C
+    BMI06
+    CMFP               0.002       0.001      0.126      -0.001       0.004
+
+  Direct
+    HBA1C
+    CMFP               0.024       0.006      0.000       0.012       0.037      *
+
+
+
+CREDIBILITY INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ HBA1C    ON
+    CMFP             0.008       0.012       0.014       0.024       0.035       0.037       0.040
+    BMI06            0.026       0.027       0.028       0.031       0.034       0.034       0.035
+    AGE              0.007       0.007       0.008       0.008       0.009       0.009       0.010
+    GENDER          -0.044      -0.036      -0.032      -0.011       0.010       0.014       0.022
+    CAL             -0.381      -0.322      -0.291      -0.131       0.026       0.055       0.120
+    MET              0.000       0.000       0.000       0.000       0.000       0.000       0.000
+    INDEX           -0.002      -0.001      -0.001      -0.001       0.000       0.000       0.000
+
+ BMI06    ON
+    CMFP            -0.060      -0.036      -0.022       0.050       0.121       0.135       0.162
+    AGE             -0.008      -0.006      -0.005       0.001       0.006       0.007       0.009
+    GENDER           0.128       0.178       0.206       0.354       0.498       0.525       0.581
+    CAL              1.229       1.661       1.865       2.980       4.085       4.285       4.736
+    MET             -0.001      -0.001      -0.001       0.000       0.001       0.001       0.001
+    INDEX            0.009       0.011       0.011       0.015       0.019       0.020       0.021
+
+ GENDER   WITH
+    AGE             -0.004       0.044       0.069       0.199       0.328       0.353       0.397
+
+ CMFP     WITH
+    AGE             -0.260      -0.158      -0.110       0.147       0.403       0.455       0.554
+    GENDER           0.004       0.007       0.009       0.017       0.025       0.027       0.030
+
+ INDEX    WITH
+    AGE             12.271      14.554      15.532      20.720      25.918      26.955      29.000
+    GENDER          -0.158      -0.094      -0.060       0.113       0.286       0.318       0.384
+    CMFP             3.855       3.982       4.046       4.395       4.748       4.821       4.955
+
+ MET      WITH
+    AGE           -471.342    -458.582    -452.389    -419.600    -386.671    -380.045    -367.458
+    GENDER          -9.683      -9.313      -9.117      -8.104      -7.111      -6.919      -6.506
+    CMFP            -5.132      -4.369      -4.011      -2.029      -0.024       0.368       1.069
+    INDEX         -750.952    -735.327    -726.822    -684.289    -643.180    -634.981    -619.807
+
+ CAL      WITH
+    AGE             -0.164      -0.158      -0.154      -0.137      -0.119      -0.115      -0.108
+    GENDER          -0.010      -0.010      -0.010      -0.009      -0.009      -0.008      -0.008
+    CMFP             0.000       0.000       0.000       0.002       0.003       0.003       0.003
+    INDEX           -0.137      -0.128      -0.123      -0.100      -0.077      -0.073      -0.064
+    MET              1.384       1.432       1.458       1.596       1.736       1.764       1.814
+
+ Means
+    AGE             46.976      47.078      47.130      47.387      47.643      47.693      47.788
+    GENDER           1.506       1.509       1.511       1.519       1.527       1.529       1.532
+    CMFP             3.944       3.950       3.953       3.970       3.987       3.990       3.997
+    INDEX           62.033      62.153      62.216      62.556      62.895      62.962      63.086
+    MET            113.230     114.018     114.409     116.387     118.394     118.778     119.464
+    CAL              0.217       0.217       0.218       0.219       0.220       0.220       0.221
+
+ Intercepts
+    BMI06           19.897      20.135      20.246      20.840      21.443      21.553      21.774
+    HBA1C            4.249       4.284       4.304       4.409       4.515       4.535       4.575
+
+ Variances
+    AGE            227.273     229.246     230.299     235.781     241.551     242.728     244.793
+    GENDER           0.241       0.243       0.244       0.250       0.256       0.257       0.260
+    CMFP             0.965       0.974       0.978       1.001       1.026       1.030       1.040
+    INDEX          396.196     399.974     401.644     411.198     421.182     423.122     427.102
+    MET          12251.816   12367.616   12425.307   12737.718   13071.723   13132.374   13260.777
+    CAL              0.004       0.004       0.004       0.005       0.005       0.005       0.005
+
+ Residual Variances
+    BMI06           12.170      12.287      12.353      12.698      13.049      13.124      13.254
+    HBA1C            0.185       0.187       0.188       0.194       0.200       0.201       0.204
+
+
+CREDIBILITY INTERVALS OF TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+Effects from CMFP to HBA1C
+
+  Total              0.009       0.013       0.015       0.026       0.036       0.038       0.043
+  Total indirect    -0.002      -0.001      -0.001       0.002       0.004       0.004       0.005
+
+  Specific indirect
+
+    HBA1C
+    BMI06
+    CMFP            -0.002      -0.001      -0.001       0.002       0.004       0.004       0.005
+
+  Direct
+    HBA1C
+    CMFP             0.008       0.012       0.014       0.024       0.035       0.037       0.040
+
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\likai\documents\git_repo\dqmedi\mplus\0409\cmfp hba1c bmi-outlier.dgm
+
+     Beginning Time:  17:23:23
+        Ending Time:  17:24:46
+       Elapsed Time:  00:01:23
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

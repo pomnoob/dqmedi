@@ -58,7 +58,7 @@ gender.all <- gender.all %>%
 #Education
 educ.all <- read.csv("chns/Educ 12.csv",stringsAsFactors = F)
 educ.all <- educ.all %>%
-  dplyr::select(IDind,hhid,A12) %>%
+  dplyr::select(IDind,hhid,WAVE,A12) %>%
   dplyr::rename(educ=A12)
 
 #Individual annual income
@@ -87,7 +87,10 @@ pe.all <- pe.all %>%
                 U24A,U24J,U24W,U24V,U25,U41,U56,U230) %>%
   dplyr::rename(hip_c=U9,waist_c=U10,diabetes=U24A,MI=U24J,stroke=U24V,
                 cancer=U24W,smoke=U25,alcohol_d=U41,pregnant=U56,SSB_d=U230) %>%
-  dplyr::mutate(bmi=WEIGHT/(HEIGHT/100)^2,hwr=waist_c/hip_c)
+  dplyr::mutate(bmi=WEIGHT/(HEIGHT/100)^2,hwr=waist_c/hip_c)%>%
+  dplyr::mutate(diastol=select(.,DIASTOL1,DIASTOL2,DIASTOL3) %>% rowMeans(na.rm = T),
+                systol=select(.,SYSTOL1,SYSTOL2,SYSTOL3) %>% rowMeans(na.rm = T))
+pe.all[pe.all=="NaN"] <- NA
 
 #Physical activity
 pa.all <- read.csv("chns/pa.csv",stringsAsFactors = F)

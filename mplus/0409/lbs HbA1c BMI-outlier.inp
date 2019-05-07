@@ -1,0 +1,34 @@
+data: file is me0409 outlier.csv;
+
+variable: names are IDind commid d3kcal d3carbo d3fat 
+                    d3protn hhid WAVE hip_c waist_c hwr 
+                    diastol systol age gender educ indinc 
+                    index met cmfp_s dash_s ahei_s
+                    cmfp dash ahei HBS LBS DQD bmi06 HS_CRP
+                     HDL_C LDL_C INS HbA1c GLUCOSE 
+                     TG TC homa_ir quicki;
+
+          usev are  age gender bmi06 HbA1c lbs index met cal;
+          missing are all(999);        
+define:
+cal=d3kcal/10000; 
+
+analysis:
+    estimator = bayes;
+    process = 2;
+    biter = (20000);
+
+model:
+age gender bmi06 HbA1c lbs cal met index;
+
+HbA1c on lbs bmi06 age gender cal met index;
+
+bmi06 on lbs age gender cal met index;
+
+
+Model indirect:
+HbA1c ind lbs;
+
+
+OUTPUT:
+CINTERVAL;
