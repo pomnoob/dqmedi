@@ -1,0 +1,45 @@
+DATA: File is id0411.csv;
+
+VARIABLE: Names are IDind age04 kcal04 bmi04 
+                                  hwr04 wc04 diasto04 systo04 
+                                  gender educ04 indinc04 index04 
+                                  met04 cmfp04 dash04 ahei04 age06 
+                                  kcal06 bmi06 hwr06 wc06 diasto06 
+                                  systo06 educ06 indinc06 index06 
+                                  met06 cmfp06 dash06 ahei06 age09 
+                                  kcal09 bmi09 hwr09 wc09 diasto09 
+                                  systo09 educ09 indinc09 index09 
+                                  met09 cmfp09 dash09 ahei09 age11 
+                                  kcal11 bmi11 hwr11 wc11 diasto11 
+                                  systo11 educ11 indinc11 ndex11 
+                                  met11 cmfp11 dash11 ahei11 
+                                  q_index q1 q2 q3;
+
+         Usev are  age04 gender kcal04 met04  
+                   bmi04 bmi06 bmi09 bmi11
+                   dash04 dash06 dash09 dash11  
+                   q1 q2 q3 educ04 systo04 diasto04;
+                   
+
+         Missing are all(999);
+
+
+ANALYSIS: 
+Type=random;
+ALGORITHM=INTEGRATION;
+Estimator=ML;
+bootstrap = 1000;
+
+
+MODEL: 
+age04 gender kcal04 met04 
+bmi04 bmi06 bmi09 bmi11
+dash04 dash06 dash09 dash11 q1 q2 q3
+educ04 systo04 diasto04;
+
+ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
+id sd | dash04@0 dash06@2 dash09@5 dash11@7;
+
+ib-sd on q1 q2 q3 age04 gender met04 kcal04 educ04 systo04 diasto04;
+
+OUTPUT: tech1 tech8 cinterval(BOOTSTRAP);
