@@ -315,8 +315,7 @@ ahei.c.c2004 <- dplyr::select(ahei.c.2004,IDind,ahei_score)
 
 dq2004 <- left_join(cmfp.c.c2004,dash.c.c2004,by="IDind")
 dq2004 <- left_join(dq2004,ahei.c.c2004,by="IDind")
-
-
+write.csv(dq2004,"data/dq2004.csv",row.names=F)
 ###########################################################################
 ###########################################################################
 ###########################################################################
@@ -538,7 +537,7 @@ ahei.c.c2006 <- dplyr::select(ahei.c.2006,IDind,ahei_score)
 
 dq2006 <- left_join(cmfp.c.c2006,dash.c.c2006,by="IDind")
 dq2006 <- left_join(dq2006,ahei.c.c2006,by="IDind")
-
+write.csv(dq2006,"data/dq2006.csv",row.names=F)
 ###########################################################################
 ###########################################################################
 ###########################################################################
@@ -760,7 +759,7 @@ ahei.c.c2009 <- dplyr::select(ahei.c.2009,IDind,ahei_score)
 
 dq2009 <- left_join(cmfp.c.c2009,dash.c.c2009,by="IDind")
 dq2009 <- left_join(dq2009,ahei.c.c2009,by="IDind")
-
+write.csv(dq2009,"data/dq2009.csv",row.names=F)
 
 ###########################################################################
 ###########################################################################
@@ -983,4 +982,4 @@ ahei.c.c2011 <- dplyr::select(ahei.c.2011,IDind,ahei_score)
 
 dq2011 <- left_join(cmfp.c.c2011,dash.c.c2011,by="IDind")
 dq2011 <- left_join(dq2011,ahei.c.c2011,by="IDind")
-
+write.csv(dq2011,"data/dq2011.csv",row.names=F)
