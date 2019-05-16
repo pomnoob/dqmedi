@@ -30,7 +30,7 @@ ALGORITHM=INTEGRATION;
 Estimator=ML;
 bootstrap = 1000;
 OUTPUT:
- tech1 tech8 cinterval(BOOTSTRAP);
+ SAMPSTAT tech1 tech4 tech8 cinterval(BOOTSTRAP);
 MODEL:
 age04 gender kcal04 met04 smoke04
 bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
@@ -38,7 +38,6 @@ dqd04 dqd06 dqd09 dqd11 q1 q2 q3;
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
 id sd | dqd04@0 dqd06@2 dqd09@5 dqd11@7;
 ib with sb;
-id with sd;
 id with sd;
 id on q1(ai1)
       q2(ai2)

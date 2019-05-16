@@ -44,8 +44,6 @@ id sd | lbs04@0 lbs06@2 lbs09@5 lbs11@7;
 ib with sb;
 id with sd;
 
-id with sd;
-
 id on q1(ai1)
       q2(ai2)
       q3(ai3)
@@ -87,4 +85,4 @@ ind_s_1=as1*bs;
 ind_s_2=as2*bs;
 ind_s_3=as3*bs;
 
-OUTPUT: tech1 tech8 cinterval(BOOTSTRAP);
+OUTPUT: SAMPSTAT tech1 tech4 tech8 cinterval(BOOTSTRAP);

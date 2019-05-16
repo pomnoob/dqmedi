@@ -18,9 +18,9 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
                      q1 q2 q3 carbo_p protn_p fat_p;
 
          Usev are  age04 gender kcal04 met04  
-                   bmi04 bmi06 bmi09 bmi11
-                   dash04 dash06 dash09 dash11  
-                   q1 q2 q3 educ04 systo04 diasto04 smoke04;
+                   bmi04 bmi06 bmi09 bmi11 smoke04
+                   hbs04 hbs06 hbs09 hbs11  
+                   educ04 systo04 diasto04 q1 q2 q3;
                    
 
          Missing are all(999);
@@ -34,13 +34,12 @@ bootstrap = 1000;
 
 
 MODEL: 
-age04 gender kcal04 met04 
-bmi04 bmi06 bmi09 bmi11 educ04 systo04 
-diasto04 smoke04
-dash04 dash06 dash09 dash11 q1 q2 q3;
+age04 gender kcal04 met04 smoke04
+bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
+hbs04 hbs06 hbs09 hbs11 q1 q2 q3;
 
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
-id sd | dash04@0 dash06@2 dash09@5 dash11@7;
+id sd | hbs04@0 hbs06@2 hbs09@5 hbs11@7;
 
 ib with sb;
 id with sd;
