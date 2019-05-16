@@ -1,5 +1,5 @@
 ##Subjects in 2004 with diet data
-macro_md.2004 <- macro_md %>% dplyr::filter(wave==2004) %>% dplyr::select(IDind,commid,d3kcal,d3carbo,d3fat,d3protn)
+macro_md.2004 <- macro_md %>% dplyr::filter(wave==2004) %>% dplyr::select(IDind,commid,d3kcal,d3carbo,d3fat,d3protn,t2)
 pe.2004 <- pe.all %>%
   dplyr::filter(WAVE==2004)
 age.2004<- age.all %>%
@@ -17,7 +17,7 @@ ID2004 <- ID2004 %>%
   dplyr::filter(stroke!=1|is.na(stroke)) %>%
   dplyr::filter(pregnant!=1|is.na(pregnant)) %>%
   dplyr::filter(age>=18) %>%
-  dplyr::select(IDind,WAVE,hhid,commid,age,d3kcal,d3carbo,d3fat,d3protn,bmi,hwr,waist_c,diastol,systol,smoke)
+  dplyr::select(IDind,WAVE,hhid,t2,commid,age,d3kcal,d3carbo,d3fat,d3protn,bmi,hwr,waist_c,diastol,systol,smoke)
 
 ##Gender
 ID2004 <- left_join(ID2004,gender.all,by="IDind")
@@ -282,6 +282,10 @@ id0411$q_index <- ntile(id0411$index04,4)
 id0411 <- dplyr::mutate(id0411,q1=case_when(q_index==2~1,q_index!=2~0),
                         q2=case_when(q_index==3~1,q_index!=3~0),
                         q3=case_when(q_index==4~1,q_index!=4~0))
+id0411 <- id0411 %>% 
+  dplyr::mutate(carbo_p=(carbo04*4/kcal04)*100,
+                protn_p=(protn04*4/kcal04)*100,
+                fat_p=(fat04*9/kcal04)*100)
 
 id0411.mplus <- id0411
 id0411.mplus[is.na(id0411.mplus)] <- 999
@@ -290,29 +294,142 @@ id0411.mplus[is.na(id0411.mplus)] <- 999
 write.csv(id0411.mplus,"data/id0411 mplus.csv",row.names = F)
 write.csv(id0411,"data/id0411.csv",row.names = F)
 
-id0411 <- id0411 %>% 
-  dplyr::mutate(carbo_p=(carbo04*4/kcal04)*100,
-                protn_p=(protn04*4/kcal04)*100,
-                fat_p=(fat04*9/kcal04)*100)
+
                 
 
 #######################################################################################
 #######################################################################################
 #######################################################################################
 #######################################################################################
+id0411 <- read.csv("data/id0411.csv",stringsAsFactors = F)
+
+id0411$q_index <- factor(id0411$q_index)
+#Mean and SD of all
 sapply(id0411, mean,na.rm=T)
 sapply(id0411, sd,na.rm=T)
+
+
+contrasts(id0411$q_index) <- contr.poly
+#Age
 tapply(id0411$age04,id0411$q_index,mean)
 tapply(id0411$age04,id0411$q_index,sd)
 
-id0411$q_index <- factor(id0411$q_index)
-contrasts(id0411$q_index) <- contr.poly
 l.age <- lm(age04~q_index+gender,data = id0411)
 summary(l.age)
 
+#BMI
+tapply(id0411$bmi04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$bmi04,id0411$q_index,sd,na.rm=T)
+l.bmi <- lm(bmi04~q_index+gender+age04,data = id0411)
+summary(l.bmi)
 
+#MET
+tapply(id0411$met04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$met04,id0411$q_index,sd,na.rm=T)
+l.met <- lm(met04~q_index+gender+age04,data = id0411)
+summary(l.met)
 
-lm.cars <- lm(dist ~ speed, data = cars)
-summary(lm.cars)
-betahat <- coef(lm.cars)
-Vbetahat <- vcov(lm.cars)
+#Systolic
+tapply(id0411$systol04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$systol04,id0411$q_index,sd,na.rm=T)
+l.systo <- lm(systol04~q_index+gender+age04,data = id0411)
+summary(l.systo)
+
+#Diastolic
+tapply(id0411$diastol04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$diastol04,id0411$q_index,sd,na.rm=T)
+l.diasto <- lm(diastol04~q_index+gender+age04,data = id0411)
+summary(l.diasto)
+
+#energy intake
+tapply(id0411$kcal04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$kcal04,id0411$q_index,sd,na.rm=T)
+l.kcal <- lm(kcal04~q_index+gender+age04,data = id0411)
+summary(l.kcal)
+
+#carbohydrate intake
+tapply(id0411$carbo_p,id0411$q_index,mean,na.rm=T)
+tapply(id0411$carbo_p,id0411$q_index,sd,na.rm=T)
+l.carbo_p <- lm(carbo_p~q_index+gender+age04,data = id0411)
+summary(l.carbo_p)
+
+#fat intake
+tapply(id0411$fat_p,id0411$q_index,mean,na.rm=T)
+tapply(id0411$fat_p,id0411$q_index,sd,na.rm=T)
+l.fat_p <- lm(fat_p~q_index+gender+age04,data = id0411)
+summary(l.fat_p)
+
+#protein intake
+tapply(id0411$protn_p,id0411$q_index,mean,na.rm=T)
+tapply(id0411$protn_p,id0411$q_index,sd,na.rm=T)
+l.protn_p <- lm(protn_p~q_index+gender+age04,data = id0411)
+summary(l.protn_p)
+
+#DQD
+tapply(id0411$dqd04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$dqd04,id0411$q_index,sd,na.rm=T)
+l.dqd <- lm(dqd04~q_index+gender+age04,data = id0411)
+summary(l.dqd)
+
+#HBS
+tapply(id0411$hbs04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$hbs04,id0411$q_index,sd,na.rm=T)
+l.hbs <- lm(hbs04~q_index+gender+age04,data = id0411)
+summary(l.hbs)
+
+#HBS
+tapply(id0411$lbs04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$lbs04,id0411$q_index,sd,na.rm=T)
+l.lbs <- lm(lbs04~q_index+gender+age04,data = id0411)
+summary(l.lbs)
+
+#CHFP
+tapply(id0411$cmfp04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$cmfp04,id0411$q_index,sd,na.rm=T)
+l.cmfp <- lm(cmfp04~q_index+gender+age04,data = id0411)
+summary(l.cmfp)
+
+#DASH
+tapply(id0411$dash04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$dash04,id0411$q_index,sd,na.rm=T)
+l.dash <- lm(dash04~q_index+gender+age04,data = id0411)
+summary(l.dash)
+
+#AHEI
+tapply(id0411$ahei04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$ahei04,id0411$q_index,sd,na.rm=T)
+l.ahei <- lm(ahei04~q_index+gender+age04,data = id0411)
+summary(l.ahei)
+
+#Urbanization index
+tapply(id0411$index04,id0411$q_index,mean,na.rm=T)
+tapply(id0411$index04,id0411$q_index,sd,na.rm=T)
+summary(id0411$q_index)
+
+# Cochran-Armitage trend test for binary
+library(coin)
+independence_test(gender~q_index,data = id0411,teststat = "quad")
+independence_test(smoke04~q_index,data = id0411,teststat = "quad")
+independence_test(t2~q_index,data = id0411,teststat = "quad")
+
+#Percentage
+id0411$q_index <- fill_gaps(id0411$q_index)
+id0411_smoke <- id0411 %>%
+  dplyr::select(smoke04,q_index) %>%
+  dplyr::filter(!is.na(q_index))
+perc <- prop.table(table(id0411_smoke))
+print(perc
+      )
+
+id0411_t2 <- id0411 %>%
+  dplyr::select(t2,q_index) %>%
+  dplyr::filter(!is.na(q_index))
+perct2 <- prop.table(table(id0411_t2),2)
+print(perct2
+)
+
+id0411_gender <- id0411 %>%
+  dplyr::select(gender,q_index) %>%
+  dplyr::filter(!is.na(q_index))
+perctg <- prop.table(table(id0411_gender),2)
+print(perctg)

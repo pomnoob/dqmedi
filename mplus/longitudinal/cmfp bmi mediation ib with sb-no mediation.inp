@@ -1,22 +1,24 @@
-DATA: File is id0411.csv;
+DATA: File is id0411 mplus.csv;
 
-VARIABLE: Names are IDind age04 kcal04 bmi04 
-                                  hwr04 wc04 diasto04 systo04 
-                                  gender educ04 indinc04 index04 
-                                  met04 cmfp04 dash04 ahei04 age06 
-                                  kcal06 bmi06 hwr06 wc06 diasto06 
-                                  systo06 educ06 indinc06 index06 
-                                  met06 cmfp06 dash06 ahei06 age09 
-                                  kcal09 bmi09 hwr09 wc09 diasto09 
-                                  systo09 educ09 indinc09 index09 
-                                  met09 cmfp09 dash09 ahei09 age11 
-                                  kcal11 bmi11 hwr11 wc11 diasto11 
-                                  systo11 educ11 indinc11 ndex11 
-                                  met11 cmfp11 dash11 ahei11 
-                                  q_index q1 q2 q3;
+VARIABLE: Names are IDind WAVE hhid t2 commid age04 
+                    kcal04 carbo04 fat04 protn04 bmi04 
+                    hwr04 wc04 diasto04 systo04 smoke04 
+                    gender educ04 indinc04 index04 met04 
+                    cmfp04 dash04 ahei04 hbs04 lbs04 dqd04 
+                    age06 kcal06 carbo06 fat06 protn06 bmi06 
+                    hwr06 wc06 diasto06 systo06 smoke06 
+                    educ06 indinc06 index06 met06 cmfp06 dash06 
+                    ahei06 hbs06 lbs06 dqd06 age09 kcal09 carbo09 
+                    fat09 protn09 bmi09 hwr09 wc09 diasto09 systo09 
+                    smoke09 educ09 indinc09 index09 met09 cmfp09 
+                    dash09 ahei09 hbs09 lbs09 dqd09 age11 kcal11 
+                    carbo11 fat11 protn11 bmi11 hwr11 wc11 diasto11 
+                    systo11 smoke11 educ11 indinc11 index11 met11 
+                    cmfp11 dash11 ahei11 hbs11 lbs11 dqd11 q_index
+                     q1 q2 q3 carbo_p protn_p fat_p;
 
          Usev are  age04 gender kcal04 met04  
-                   bmi04 bmi06 bmi09 bmi11
+                   bmi04 bmi06 bmi09 bmi11 smoke04
                    cmfp04 cmfp06 cmfp09 cmfp11  
                    q1 q2 q3 educ04 systo04 diasto04;
                    
@@ -32,13 +34,13 @@ bootstrap = 1000;
 
 
 MODEL: 
-age04 gender kcal04 met04 
+age04 gender kcal04 met04 smoke04
 bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
 cmfp04 cmfp06 cmfp09 cmfp11 q1 q2 q3;
 
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
 id sd | cmfp04@0 cmfp06@2 cmfp09@5 cmfp11@7;
 
-ib-sd on q1 q2 q3 age04 gender met04 kcal04 educ04 systo04 diasto04;
+ib-sd on q1 q2 q3 age04 gender met04 kcal04 educ04 systo04 diasto04 smoke04;
 
 OUTPUT: tech1 tech8 cinterval(BOOTSTRAP);
