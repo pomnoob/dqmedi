@@ -19,7 +19,7 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
 
          Usev are  age04 gender kcal04 met04  
                    bmi04 bmi06 bmi09 bmi11 smoke04
-                   dash04 dash06 dash09 dash11  
+                   lbs04 lbs06 lbs09 lbs11  
                    educ04 systo04 diasto04;
                    
 
@@ -36,10 +36,13 @@ Estimator=ML;
 MODEL: 
 age04 gender kcal04 met04 smoke04
 bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
-dash04 dash06 dash09 dash11;
+lbs04 lbs06 lbs09 lbs11;
 
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
-id sd | dash04@0 dash06@2 dash09@5 dash11@7;
+id sd | lbs04@0 lbs06@2 lbs09@5 lbs11@7;
+
+ib with sb;
+id with sd;
 
 ib-sd on age04 gender met04 kcal04 educ04 systo04 diasto04 smoke04;
 

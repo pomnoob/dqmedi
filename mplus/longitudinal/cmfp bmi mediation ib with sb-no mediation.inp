@@ -20,7 +20,7 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
          Usev are  age04 gender kcal04 met04  
                    bmi04 bmi06 bmi09 bmi11 smoke04
                    cmfp04 cmfp06 cmfp09 cmfp11  
-                   q1 q2 q3 educ04 systo04 diasto04;
+                   educ04 systo04 diasto04;
                    
 
          Missing are all(999);
@@ -30,17 +30,20 @@ ANALYSIS:
 Type=random;
 ALGORITHM=INTEGRATION;
 Estimator=ML;
-bootstrap = 1000;
+
 
 
 MODEL: 
 age04 gender kcal04 met04 smoke04
 bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
-cmfp04 cmfp06 cmfp09 cmfp11 q1 q2 q3;
+cmfp04 cmfp06 cmfp09 cmfp11;
 
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
 id sd | cmfp04@0 cmfp06@2 cmfp09@5 cmfp11@7;
 
-ib-sd on q1 q2 q3 age04 gender met04 kcal04 educ04 systo04 diasto04 smoke04;
+ib with sb;
+id with sd;
 
-OUTPUT: tech1 tech8 cinterval(BOOTSTRAP);
+ib-sd on age04 gender met04 kcal04 educ04 systo04 diasto04 smoke04;
+
+OUTPUT: tech1 tech8 tech4 cinterval;

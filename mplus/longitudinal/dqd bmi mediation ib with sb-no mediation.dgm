@@ -1,0 +1,164 @@
+VERSION 1.1.0
+INPUT
+DATA:
+ File is id0411 mplus.csv;
+VARIABLE:
+ Names are IDind WAVE hhid t2 commid age04
+                    kcal04 carbo04 fat04 protn04 bmi04
+                    hwr04 wc04 diasto04 systo04 smoke04
+                    gender educ04 indinc04 index04 met04
+                    cmfp04 dash04 ahei04 hbs04 lbs04 dqd04
+                    age06 kcal06 carbo06 fat06 protn06 bmi06
+                    hwr06 wc06 diasto06 systo06 smoke06
+                    educ06 indinc06 index06 met06 cmfp06 dash06
+                    ahei06 hbs06 lbs06 dqd06 age09 kcal09 carbo09
+                    fat09 protn09 bmi09 hwr09 wc09 diasto09 systo09
+                    smoke09 educ09 indinc09 index09 met09 cmfp09
+                    dash09 ahei09 hbs09 lbs09 dqd09 age11 kcal11
+                    carbo11 fat11 protn11 bmi11 hwr11 wc11 diasto11
+                    systo11 smoke11 educ11 indinc11 index11 met11
+                    cmfp11 dash11 ahei11 hbs11 lbs11 dqd11 q_index
+                     q1 q2 q3 carbo_p protn_p fat_p;
+         Usev are  age04 gender kcal04 met04
+                   bmi04 bmi06 bmi09 bmi11 smoke04
+                   dqd04 dqd06 dqd09 dqd11
+                   educ04 systo04 diasto04;
+         Missing are all(999);
+ANALYSIS:
+Type=random;
+ALGORITHM=INTEGRATION;
+Estimator=ML;
+OUTPUT:
+ tech1 tech8 tech4 cinterval;
+MODEL:
+age04 gender kcal04 met04 smoke04
+bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
+dqd04 dqd06 dqd09 dqd11;
+ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
+id sd | dqd04@0 dqd06@2 dqd09@5 dqd11@7;
+ib with sb;
+id with sd;
+ib-sd on age04 gender met04 kcal04 educ04 systo04 diasto04 smoke04;
+INPUT_END
+3
+0
+0
+0
+ML
+1
+GENERAL
+0
+16
+4
+0
+bmi04 bmi06 bmi09 bmi11 dqd04 dqd06 dqd09 dqd11 age04 gender kcal04 met04 smoke04 educ04 systo04 diasto04 ib sb id sd
+2
+-1 -1 -1 -1 -1 -1 -1 -1 0 0 0 0 0 0 0 0 1 1 1 1
+2
+ib sb
+bmi04 bmi06 bmi09 bmi11
+id sd
+dqd04 dqd06 dqd09 dqd11
+0
+1 1 ib bmi04      1.000      0.000      1.000      1.000
+1 1 ib bmi06      1.000      0.000      1.000      1.000
+1 1 ib bmi09      1.000      0.000      1.000      1.000
+1 1 ib bmi11      1.000      0.000      1.000      1.000
+1 1 sb bmi04      0.000      0.000      0.000      0.000
+1 1 sb bmi06      2.000      0.000      2.000      2.000
+1 1 sb bmi09      5.000      0.000      5.000      5.000
+1 1 sb bmi11      7.000      0.000      7.000      7.000
+1 1 id dqd04      1.000      0.000      1.000      1.000
+1 1 id dqd06      1.000      0.000      1.000      1.000
+1 1 id dqd09      1.000      0.000      1.000      1.000
+1 1 id dqd11      1.000      0.000      1.000      1.000
+1 1 sd dqd04      0.000      0.000      0.000      0.000
+1 1 sd dqd06      2.000      0.000      2.000      2.000
+1 1 sd dqd09      5.000      0.000      5.000      5.000
+1 1 sd dqd11      7.000      0.000      7.000      7.000
+1 1 age04 ib      0.001      0.003     -0.004      0.006
+1 1 gender ib      0.406      0.086      0.238      0.574
+1 1 met04 ib      0.000      0.000     -0.001      0.000
+1 1 kcal04 ib      0.000      0.000      0.000      0.000
+1 1 educ04 ib      0.141      0.028      0.085      0.197
+1 1 systo04 ib      0.026      0.003      0.020      0.031
+1 1 diasto04 ib      0.059      0.004      0.050      0.067
+1 1 smoke04 ib     -0.361      0.077     -0.512     -0.210
+1 1 age04 sb     -0.004      0.000     -0.005     -0.003
+1 1 gender sb     -0.037      0.012     -0.061     -0.014
+1 1 met04 sb      0.000      0.000      0.000      0.000
+1 1 kcal04 sb      0.000      0.000      0.000      0.000
+1 1 educ04 sb     -0.018      0.004     -0.026     -0.010
+1 1 systo04 sb     -0.001      0.000     -0.002     -0.001
+1 1 diasto04 sb      0.000      0.001     -0.001      0.001
+1 1 smoke04 sb     -0.014      0.010     -0.034      0.007
+1 1 age04 id     -0.081      0.007     -0.094     -0.068
+1 1 gender id     -2.051      0.212     -2.466     -1.637
+1 1 met04 id      0.008      0.001      0.006      0.010
+1 1 kcal04 id      0.001      0.000      0.001      0.001
+1 1 educ04 id     -2.397      0.070     -2.534     -2.259
+1 1 systo04 id     -0.021      0.007     -0.035     -0.007
+1 1 diasto04 id      0.026      0.011      0.005      0.047
+1 1 smoke04 id      0.288      0.192     -0.089      0.665
+1 1 age04 sd      0.006      0.001      0.003      0.009
+1 1 gender sd     -0.075      0.044     -0.163      0.012
+1 1 met04 sd      0.000      0.000      0.000      0.000
+1 1 kcal04 sd      0.000      0.000      0.000      0.000
+1 1 educ04 sd      0.064      0.015      0.035      0.094
+1 1 systo04 sd      0.001      0.001     -0.002      0.004
+1 1 diasto04 sd     -0.003      0.002     -0.008      0.001
+1 1 smoke04 sd     -0.031      0.040     -0.109      0.047
+2 1 gender age04      0.199      0.078      0.045      0.353
+2 1 kcal04 age04  -1363.375    107.236  -1573.556  -1153.193
+2 1 kcal04 gender    -91.666      3.587    -98.695    -84.636
+2 1 met04 age04   -422.139     19.929   -461.200   -383.079
+2 1 met04 gender     -8.244      0.611     -9.441     -7.046
+2 1 met04 kcal04  16004.120    843.033  14351.774  17656.465
+2 1 smoke04 age04      0.283      0.083      0.120      0.446
+2 1 smoke04 gender     -0.150      0.003     -0.156     -0.144
+2 1 smoke04 kcal04     57.555      3.701     50.300     64.810
+2 1 smoke04 met04      4.925      0.636      3.679      6.171
+2 1 educ04 age04     -8.178      0.226     -8.620     -7.736
+2 1 educ04 gender     -0.129      0.007     -0.143     -0.116
+2 1 educ04 kcal04     79.011      9.253     60.876     97.146
+2 1 educ04 met04     -1.863      1.609     -5.015      1.290
+2 1 educ04 smoke04      0.042      0.007      0.028      0.056
+2 1 systo04 age04    117.453      3.251    111.081    123.824
+2 1 systo04 gender     -0.816      0.098     -1.008     -0.624
+2 1 systo04 kcal04   -957.690    133.083  -1218.533   -696.847
+2 1 systo04 met04   -278.507     23.455   -324.479   -232.535
+2 1 systo04 smoke04      0.674      0.102      0.473      0.875
+2 1 systo04 educ04     -3.732      0.261     -4.245     -3.220
+2 1 diasto04 age04     35.790      1.871     32.123     39.458
+2 1 diasto04 gender     -0.692      0.060     -0.809     -0.576
+2 1 diasto04 kcal04   -283.561     80.639   -441.614   -125.507
+2 1 diasto04 met04    -86.033     14.028   -113.528    -58.539
+2 1 diasto04 smoke04      0.448      0.062      0.326      0.570
+2 1 diasto04 educ04     -0.818      0.157     -1.126     -0.510
+2 1 diasto04 systo04    148.393      2.708    143.085    153.701
+2 1 ib sb     -0.097      0.020     -0.136     -0.058
+2 1 id sd     -1.026      0.206     -1.430     -0.621
+2 1 id ib     -0.531      0.265     -1.049     -0.012
+2 1 id sb      0.157      0.036      0.085      0.228
+2 1 sd ib      0.123      0.055      0.014      0.232
+2 1 sd sb     -0.014      0.007     -0.027      0.000
+4 1 bmi04      0.964      0.072      0.823      1.105
+4 1 bmi06      3.136      0.070      2.999      3.273
+4 1 bmi09      1.532      0.071      1.393      1.672
+4 1 bmi11     13.576      0.292     13.003     14.148
+4 1 dqd04     47.817      1.266     45.335     50.299
+4 1 dqd06     48.189      1.009     46.212     50.166
+4 1 dqd09     47.891      1.096     45.743     50.038
+4 1 dqd11     47.091      1.490     44.172     50.011
+4 1 ib      9.195      0.162      8.877      9.512
+4 1 sb      0.046      0.004      0.038      0.055
+4 1 id     27.236      1.163     24.957     29.515
+4 1 sd      0.297      0.050      0.199      0.395
+5 1 age04    235.499      3.409    228.818    242.180
+5 1 gender      0.250      0.004      0.243      0.257
+5 1 kcal04 458288.875   6633.166 445287.875 471289.875
+5 1 met04  12735.149    195.547  12351.878  13118.421
+5 1 smoke04      0.276      0.004      0.268      0.284
+5 1 educ04      1.753      0.026      1.703      1.803
+5 1 systo04    345.076      5.164    334.954    355.197
+5 1 diasto04    126.167      1.885    122.471    129.862
