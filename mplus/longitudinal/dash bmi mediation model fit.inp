@@ -15,12 +15,12 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
                     carbo11 fat11 protn11 bmi11 hwr11 wc11 diasto11 
                     systo11 smoke11 educ11 indinc11 index11 met11 
                     cmfp11 dash11 ahei11 hbs11 lbs11 dqd11 q_index
-                     q1 q2 q3 carbo_p protn_p fat_p;
+                    q1 q2 q3 carbo_p protn_p fat_p;
 
          Usev are  age04 gender kcal04 met04  
-                   bmi04 bmi06 bmi09 bmi11
-                   ahei04 ahei06 ahei09 ahei11  
-                   q1 q2 q3 educ04 systo04 diasto04 smoke04;
+                   bmi04 bmi06 bmi09 bmi11 smoke04
+                   dash04 dash06 dash09 dash11  
+                   educ04 systo04 diasto04 q1 q2 q3;
                    
 
          Missing are all(999);
@@ -28,20 +28,16 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
 
 ANALYSIS: 
 Type=random;
-ALGORITHM=INTEGRATION;
-Estimator=ML;
-bootstrap = 1000;
+
 
 
 MODEL: 
-age04 gender kcal04 met04 
-bmi04 bmi06 bmi09 bmi11 educ04 systo04 
-diasto04 smoke04
-ahei04 ahei06 ahei09 ahei11 q1 q2 q3;
+age04 gender kcal04 met04 smoke04
+bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
+dash04 dash06 dash09 dash11 q1 q2 q3;
 
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
-id sd | ahei04@0 ahei06@2 ahei09@5 ahei11@7;
-
+id sd | dash04@0 dash06@2 dash09@5 dash11@7;
 
 ib with sb;
 id with sd;
@@ -87,4 +83,4 @@ ind_s_1=as1*bs;
 ind_s_2=as2*bs;
 ind_s_3=as3*bs;
 
-OUTPUT: SAMPSTAT tech1 tech4 tech8 cinterval(BOOTSTRAP);
+OUTPUT: SAMPSTAT cinterval;

@@ -18,9 +18,9 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
                      q1 q2 q3 carbo_p protn_p fat_p;
 
          Usev are  age04 gender kcal04 met04  
-                   bmi04 bmi06 bmi09 bmi11
-                   ahei04 ahei06 ahei09 ahei11  
-                   q1 q2 q3 educ04 systo04 diasto04 smoke04;
+                   bmi04 bmi06 bmi09 bmi11 smoke04
+                   lbs04 lbs06 lbs09 lbs11  
+                   q1 q2 q3 educ04 systo04 diasto04;
                    
 
          Missing are all(999);
@@ -28,63 +28,18 @@ VARIABLE: Names are IDind WAVE hhid t2 commid age04
 
 ANALYSIS: 
 Type=random;
-ALGORITHM=INTEGRATION;
-Estimator=ML;
-bootstrap = 1000;
-
 
 MODEL: 
-age04 gender kcal04 met04 
-bmi04 bmi06 bmi09 bmi11 educ04 systo04 
-diasto04 smoke04
-ahei04 ahei06 ahei09 ahei11 q1 q2 q3;
+age04 gender kcal04 met04 smoke04
+bmi04 bmi06 bmi09 bmi11 educ04 systo04 diasto04
+lbs04 lbs06 lbs09 lbs11 q1 q2 q3;
 
 ib sb | bmi04@0 bmi06@2 bmi09@5 bmi11@7;
-id sd | ahei04@0 ahei06@2 ahei09@5 ahei11@7;
-
+id sd | lbs04@0 lbs06@2 lbs09@5 lbs11@7;
 
 ib with sb;
 id with sd;
 
-id on q1(ai1)
-      q2(ai2)
-      q3(ai3)
-      age04 gender kcal04 met04
-      educ04 systo04 diasto04 smoke04;
+ib-sd on q1 q2 q3 age04 gender met04 kcal04 educ04 systo04 diasto04 smoke04;
 
-sd on q1(as1)
-      q2(as2)
-      q3(as3)
-      age04 gender kcal04 met04
-      educ04 systo04 diasto04 smoke04;
-
-sb on id(bi)
-      sd(bs)
-      q1(c1)
-      q2(c2)
-      q3(c3)
-      age04 gender kcal04 met04
-      educ04 systo04 diasto04 smoke04;
-
-
-MODEL CONSTRAINT:
-NEW (ind1 ind2 ind3 di1 di2 di3 to1 to2 to3
- ind_l_1 ind_l_2 ind_l_3
-ind_s_1 ind_s_2 ind_s_3);
-ind1=as1*bs+ai1*bi;
-ind2=as2*bs+ai2*bi;
-ind3=as3*bs+ai3*bi;
-to1=as1*bs+ai1*bi+c1;
-to2=as2*bs+ai2*bi+c2;
-to3=as3*bs+ai3*bi+c3;
-di1=c1;
-di2=c2;
-di3=c3;
-ind_l_1=ai1*bi;
-ind_l_2=ai2*bi;
-ind_l_3=ai3*bi;
-ind_s_1=as1*bs;
-ind_s_2=as2*bs;
-ind_s_3=as3*bs;
-
-OUTPUT: SAMPSTAT tech1 tech4 tech8 cinterval(BOOTSTRAP);
+OUTPUT: SAMPSTAT cinterval;
