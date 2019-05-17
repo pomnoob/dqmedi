@@ -10,6 +10,19 @@ age.2004<- age.all %>%
 ID2004 <- left_join(macro_md.2004,pe.2004,by="IDind")
 ID2004 <- left_join(ID2004,age.2004,by="IDind")
 
+id04_age <- ID2004 %>%
+  dplyr::filter(age>=18)#n=9784
+id_diabetes <- id04_age %>%
+  dplyr::filter(diabetes==1)#n=141
+id_MI <- id04_age %>%
+  dplyr::filter(MI==1)#n=43
+id_stroke <- id04_age %>%
+  dplyr::filter(stroke==1)#n=0
+id_cancer <- id04_age %>%
+  dplyr::filter(cancer==1)#n=0
+id_pregnant <- id04_age %>%
+  dplyr::filter(pregnant==1)#n=62
+
 ID2004 <- ID2004 %>%
   dplyr::filter(diabetes!=1 |is.na(diabetes)) %>%
   dplyr::filter(MI!=1|is.na(MI)) %>%
@@ -433,3 +446,7 @@ id0411_gender <- id0411 %>%
   dplyr::filter(!is.na(q_index))
 perctg <- prop.table(table(id0411_gender),2)
 print(perctg)
+
+#
+sapply(id0411,mean,na.rm=T)
+sapply(id0411,sd,na.rm=T)
